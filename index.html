@@ -3,6 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slidown — Markdown to slides</title>
+<meta name="description" content="Turn Markdown writing into presentation-ready slide decks fast — no PowerPoint busywork, with AI assistance and customizable themes.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Slidown — Markdown to slides">
+<meta property="og:description" content="Turn Markdown writing into presentation-ready slide decks fast — no PowerPoint busywork, with AI assistance and customizable themes.">
+<meta property="og:url" content="https://slidown.dev">
+<meta property="og:image" content="https://slidown.dev/assets/cover.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Slidown — Markdown to slides">
+<meta name="twitter:description" content="Turn Markdown writing into presentation-ready slide decks fast — no PowerPoint busywork, with AI assistance and customizable themes.">
+<meta name="twitter:image" content="https://slidown.dev/assets/cover.png">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -14,19 +27,19 @@
   body{margin:0}
   a{color:#2B4ACB;text-decoration:none}
   a:hover{color:#1C34A0;text-decoration:underline}
-  .folio-scroll::-webkit-scrollbar{width:9px;height:9px}
-  .folio-scroll::-webkit-scrollbar-thumb{background:rgba(130,130,145,.34);border-radius:9px}
-  .folio-scroll::-webkit-scrollbar-thumb:hover{background:rgba(130,130,145,.55)}
-  .folio-scroll::-webkit-scrollbar-track{background:transparent}
-  @keyframes folio-pop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-  @keyframes folio-toast{0%{opacity:0;transform:translate(-50%,8px)}10%{opacity:1;transform:translate(-50%,0)}90%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,8px)}}
-  @keyframes folio-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+  .slidown-scroll::-webkit-scrollbar{width:9px;height:9px}
+  .slidown-scroll::-webkit-scrollbar-thumb{background:rgba(130,130,145,.34);border-radius:9px}
+  .slidown-scroll::-webkit-scrollbar-thumb:hover{background:rgba(130,130,145,.55)}
+  .slidown-scroll::-webkit-scrollbar-track{background:transparent}
+  @keyframes slidown-pop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes slidown-toast{0%{opacity:0;transform:translate(-50%,8px)}10%{opacity:1;transform:translate(-50%,0)}90%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,8px)}}
+  @keyframes slidown-pulse{0%,100%{opacity:1}50%{opacity:.45}}
   @page{size:1280px 720px;margin:0}
   @media print{
     body *{visibility:hidden}
-    #folio-print-area,#folio-print-area *{visibility:visible}
-    #folio-print-area{display:block !important;position:absolute;top:0;left:0;margin:0;padding:0}
-    .folio-print-page{page-break-after:always;break-after:page}
+    #slidown-print-area,#slidown-print-area *{visibility:visible}
+    #slidown-print-area{display:block !important;position:absolute;top:0;left:0;margin:0;padding:0}
+    .slidown-print-page{page-break-after:always;break-after:page}
   }
 </style>
 </helmet>
@@ -38,7 +51,7 @@
       <div style="{{ logoMarkStyle }}">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20"></path><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"></path><path d="m7 21 5-5 5 5"></path></svg>
       </div>
-      <div style="{{ wordmarkStyle }}">Folio</div>
+      <div style="{{ wordmarkStyle }}">slidown</div>
     </div>
 
     <div style="display:flex;align-items:center;gap:6px">
@@ -239,7 +252,7 @@
       </button>
 
       <sc-if value="{{ aiOpen }}" hint-placeholder-val="{{ false }}">
-        <div ref="{{ aiPanelRef }}" style="{{ aiPanelStyle }}" class="folio-scroll">
+        <div ref="{{ aiPanelRef }}" style="{{ aiPanelStyle }}" class="slidown-scroll">
           <div style="display:flex;align-items:center;justify-content:space-between">
             <div style="{{ aiTitleStyle }}">Ask AI</div>
             <div style="{{ aiCloseStyle }}" style-hover="background:rgba(130,130,145,.14)" onClick="{{ toggleAI }}">
@@ -252,7 +265,7 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
             </div>
             <div style="flex:1;min-width:0">
-              <div style="{{ skillTitleStyle }}">Get the Folio skill</div>
+              <div style="{{ skillTitleStyle }}">Get the slidown skill</div>
               <div style="{{ skillBodyStyle }}">Best practices for any AI tool</div>
             </div>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.6"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -291,7 +304,7 @@
     </div>
   </div>
 
-  <footer style="{{ footerStyle }}" class="folio-scroll">
+  <footer style="{{ footerStyle }}" class="slidown-scroll">
     <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="4">
       <div
         style="{{ slide.thumbStyle }}"
@@ -325,9 +338,9 @@
   </sc-if>
 
   <sc-if value="{{ printing }}" hint-placeholder-val="{{ false }}">
-    <div id="folio-print-area">
+    <div id="slidown-print-area">
       <sc-for list="{{ printSlides }}" as="ps" hint-placeholder-count="4">
-        <div class="folio-print-page" style="{{ ps.pageStyle }}">
+        <div class="slidown-print-page" style="{{ ps.pageStyle }}">
           <div style="{{ ps.layoutRowStyle }}">
             <sc-if value="{{ ps.showBleedImage }}" hint-placeholder-val="{{ false }}">
               <div style="{{ ps.bleedImageWrapStyle }}">{{ ps.bleedImageEl }}</div>
@@ -357,10 +370,10 @@
 <script type="text/x-dc" data-dc-script>
 const DEFAULT_MD = `+++
 layout: title
-footer: Folio
+footer: slidown
 date: true
 +++
-# Welcome to Folio
+# Welcome to slidown
 Write your slides in plain markdown — no menus required.
 ---
 ## The basics
@@ -393,7 +406,7 @@ The image fills the slide, text sits on top.
 ---
 +++
 header: Getting fancy
-footer: Folio · Product deck
+footer: slidown · Product deck
 date: true
 +++
 ## Per-slide extras
@@ -429,11 +442,11 @@ const DECK_FONTS = {
 const LAYOUT_LABELS = { stack: 'Stack', title: 'Title', split: 'Split', 'full-bleed': 'Full bleed', bento: 'Bento', 'media-top': 'Media top', columns: 'Columns', frame: 'Frame' };
 
 const SKILL_MD = [
-  '# Folio Slides — authoring skill',
+  '# slidown Slides — authoring skill',
   '',
-  'Write presentations as plain markdown that Folio renders as slides.',
+  'Write presentations as plain markdown that slidown renders as slides.',
   'Paste this file into Claude, ChatGPT or Gemini as a project instruction or',
-  'knowledge file, then ask it for a deck and paste the result into Folio.',
+  'knowledge file, then ask it for a deck and paste the result into slidown.',
   '',
   '## Output contract',
   '',
@@ -756,7 +769,7 @@ class Component extends DCLogic {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'folio-slides.skill.md';
+    a.download = 'slidown-slides.skill.md';
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -785,7 +798,7 @@ class Component extends DCLogic {
   exportPPTX = () => {
     this.setState({ openDropdown: null });
     this.showToast('Preparing PPTX…');
-    setTimeout(() => this.showToast('folio-deck.pptx downloaded'), 1200);
+    setTimeout(() => this.showToast('slidown-deck.pptx downloaded'), 1200);
   };
 
   selectSlide = (i) => {
@@ -908,7 +921,7 @@ class Component extends DCLogic {
     const btnBase = { height: 36, minWidth: 36, borderRadius: 9, border: '1.5px solid transparent', background: 'transparent', color: chrome.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontFamily: UI_FONT, fontSize: 14, fontWeight: 600, transition: 'background .14s, transform .14s, opacity .14s', padding: 0 };
     const openBtn = (isOpen) => (isOpen ? { background: chrome.accentSoft, border: '1.5px solid ' + chrome.accent, color: chrome.accent } : {});
 
-    const dropdownPanelStyle = { position: 'absolute', top: 44, right: 0, minWidth: 176, background: chrome.surface, border: '1px solid ' + chrome.border, borderRadius: 13, boxShadow: '0 14px 36px rgba(0,0,0,.16)', padding: 7, zIndex: 30, animation: 'folio-pop .13s ease-out', fontFamily: UI_FONT };
+    const dropdownPanelStyle = { position: 'absolute', top: 44, right: 0, minWidth: 176, background: chrome.surface, border: '1px solid ' + chrome.border, borderRadius: 13, boxShadow: '0 14px 36px rgba(0,0,0,.16)', padding: 7, zIndex: 30, animation: 'slidown-pop .13s ease-out', fontFamily: UI_FONT };
     const dropdownLabelStyle = { display: 'flex', alignItems: 'center', gap: 6, fontSize: 10.5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', color: chrome.inkMuted, padding: '6px 8px 6px' };
     const dropdownSepStyle = { height: 1, background: chrome.border, margin: '6px 2px' };
 
@@ -1225,7 +1238,7 @@ class Component extends DCLogic {
       toggleAI: this.toggleAI,
       aiOpen: s.aiOpen,
       aiPanelRef: (el) => { this.aiPanelEl = el; },
-      aiPanelStyle: { position: 'absolute', bottom: 90, right: 26, width: 306, maxHeight: '68%', background: chrome.surface, border: '1px solid ' + chrome.border, borderRadius: 14, boxShadow: '0 20px 48px rgba(0,0,0,.22)', padding: 16, display: 'flex', flexDirection: 'column', gap: 11, overflowY: 'auto', animation: 'folio-pop .14s ease-out', fontFamily: UI_FONT, zIndex: 13 },
+      aiPanelStyle: { position: 'absolute', bottom: 90, right: 26, width: 306, maxHeight: '68%', background: chrome.surface, border: '1px solid ' + chrome.border, borderRadius: 14, boxShadow: '0 20px 48px rgba(0,0,0,.22)', padding: 16, display: 'flex', flexDirection: 'column', gap: 11, overflowY: 'auto', animation: 'slidown-pop .14s ease-out', fontFamily: UI_FONT, zIndex: 13 },
       aiTitleStyle: { fontWeight: 700, fontSize: 15 },
       aiCloseStyle: { width: 26, height: 26, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: chrome.inkMuted, transition: 'background .14s' },
       providerOptions,
@@ -1241,7 +1254,7 @@ class Component extends DCLogic {
       evaluateDeck: this.evaluateDeck,
       aiLoading: s.aiLoading,
       aiNotLoading: !s.aiLoading,
-      aiPrimaryBtnStyle: { flex: 1, padding: '10px 0', borderRadius: 8, border: 'none', background: chrome.accent, color: chrome.onAccent, fontWeight: 700, fontSize: 13, cursor: s.aiLoading ? 'default' : 'pointer', opacity: s.aiLoading ? 0.65 : 1, fontFamily: UI_FONT, transition: 'opacity .14s', animation: s.aiLoading ? 'folio-pulse 1.4s ease-in-out infinite' : 'none' },
+      aiPrimaryBtnStyle: { flex: 1, padding: '10px 0', borderRadius: 8, border: 'none', background: chrome.accent, color: chrome.onAccent, fontWeight: 700, fontSize: 13, cursor: s.aiLoading ? 'default' : 'pointer', opacity: s.aiLoading ? 0.65 : 1, fontFamily: UI_FONT, transition: 'opacity .14s', animation: s.aiLoading ? 'slidown-pulse 1.4s ease-in-out infinite' : 'none' },
       aiSecondaryBtnStyle: { flex: 1, padding: '10px 0', borderRadius: 8, border: '1.5px solid ' + chrome.border, background: 'transparent', color: chrome.ink, fontWeight: 700, fontSize: 13, cursor: s.aiLoading ? 'default' : 'pointer', opacity: s.aiLoading ? 0.65 : 1, fontFamily: UI_FONT, transition: 'background .14s' },
       aiError: s.aiError,
       aiErrorStyle: { fontSize: 12.5, lineHeight: 1.5, color: dark ? '#FF9C90' : '#B23A2C', background: dark ? 'rgba(255,120,105,.12)' : 'rgba(178,58,44,.09)', borderRadius: 8, padding: '9px 11px' },
@@ -1259,7 +1272,7 @@ class Component extends DCLogic {
       addSlide: this.addSlide,
 
       toast: s.toast,
-      toastStyle: { position: 'fixed', bottom: 116, left: '50%', transform: 'translateX(-50%)', background: chrome.ink, color: chrome.bg, padding: '11px 19px', borderRadius: 999, fontSize: 13, fontWeight: 600, animation: 'folio-toast 2.6s ease-in-out', zIndex: 100, fontFamily: UI_FONT },
+      toastStyle: { position: 'fixed', bottom: 116, left: '50%', transform: 'translateX(-50%)', background: chrome.ink, color: chrome.bg, padding: '11px 19px', borderRadius: 999, fontSize: 13, fontWeight: 600, animation: 'slidown-toast 2.6s ease-in-out', zIndex: 100, fontFamily: UI_FONT },
 
       printing: s.printing,
       printSlides,
