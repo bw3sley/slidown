@@ -578,8 +578,15 @@ const SKILL_MD = [
 ].join('\n');
 
 const UI_FONT = "'Plus Jakarta Sans', sans-serif";
+
+function getBoardId() {
+  const p = window.location.pathname.replace(/^\/+|\/+$/g, '');
+  return p || '__root__';
+}
+
 class Component extends DCLogic {
   state = {
+    boardId: getBoardId(),
     markdown: DEFAULT_MD,
     activeSlide: 0,
     deckTheme: 'paper',
@@ -603,7 +610,16 @@ class Component extends DCLogic {
 
   componentDidMount() {
     try {
-      const saved = JSON.parse(localStorage.getItem('folio-deck-v1') || 'null');
+      const boardKey = 'slidown-board:' + this.state.boardId;
+      let saved = JSON.parse(localStorage.getItem(boardKey) || 'null');
+      if (!saved && this.state.boardId === '__root__') {
+        const legacy = JSON.parse(localStorage.getItem('slidown-deck-v1') || 'null');
+        if (legacy) {
+          saved = legacy;
+          localStorage.setItem(boardKey, JSON.stringify(legacy));
+          localStorage.removeItem('slidown-deck-v1');
+        }
+      }
       if (saved) {
         this.state.markdown = saved.markdown ?? this.state.markdown;
         this.state.deckTheme = DECK_THEMES[saved.deckTheme] ? saved.deckTheme : this.state.deckTheme;
@@ -690,8 +706,9 @@ class Component extends DCLogic {
 
   persist = (patch) => {
     try {
-      const cur = JSON.parse(localStorage.getItem('folio-deck-v1') || '{}');
-      localStorage.setItem('folio-deck-v1', JSON.stringify({ ...cur, ...patch }));
+      const boardKey = 'slidown-board:' + this.state.boardId;
+      const cur = JSON.parse(localStorage.getItem(boardKey) || '{}');
+      localStorage.setItem(boardKey, JSON.stringify({ ...cur, ...patch }));
     } catch (e) {}
   };
 
@@ -779,9 +796,7 @@ class Component extends DCLogic {
 
   copyLink = () => {
     this.setState({ openDropdown: null });
-    let id = localStorage.getItem('folio-share-id');
-    if (!id) { id = Math.random().toString(36).slice(2, 9); localStorage.setItem('folio-share-id', id); }
-    const link = window.location.href.split('?')[0] + '?deck=' + id;
+    const link = window.location.href;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(link).then(() => this.showToast('Link copied to clipboard'));
     } else {
