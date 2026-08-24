@@ -27,7 +27,7 @@ This document is the authoritative reference for creating and extending componen
 import { tv, type VariantProps } from "tailwind-variants";
 
 // Class merger
-import { cn } from "#/lib/utils";
+import { cn } from "@/lib/utils";
 
 // Radix primitives (example — pick the right one per component)
 import * as ProgressPrimitive from "@radix-ui/react-progress";
@@ -46,7 +46,7 @@ Use this for single-element, self-contained components.
 // badge.tsx
 import type { HTMLAttributes } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { cn } from "#/lib/utils";
+import { cn } from "@/lib/utils";
 
 const badgeVariants = tv({
   base: ["inline-flex items-center gap-1 font-medium rounded-sm border"],
@@ -110,7 +110,7 @@ InputDescription   ← helper text
 InputError         ← validation error message
 ```
 
-Labeling uses the standalone `Label` component (`#/components/ui/label`) rather than an `Input`-scoped part — it's shared across `Input`, `Select`, and other fields.
+Labeling uses the standalone `Label` component (`@/components/ui/label`) rather than an `Input`-scoped part — it's shared across `Input`, `Select`, and other fields.
 
 ### Usage by the consumer
 
@@ -120,8 +120,8 @@ import {
   InputControl,
   InputDescription,
   InputError,
-} from "#/components/ui/input";
-import { Label } from "#/components/ui/label";
+} from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 <InputRoot>
   <Label htmlFor="email">Email</Label>
@@ -356,7 +356,7 @@ Copy-paste template for a **new simple component**:
 // my-component.tsx
 import type { HTMLAttributes } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { cn } from "#/lib/utils";
+import { cn } from "@/lib/utils";
 
 const myComponentVariants = tv({
   base: [

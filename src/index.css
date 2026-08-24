@@ -1,1 +1,244 @@
 @import "tailwindcss";
+
+/*
+ * Dark mode is an explicit class on <html>, not `prefers-color-scheme` --
+ * slidown's theme toggle is manual and persisted. `:where()` keeps the
+ * variant at zero specificity and also matches the `.dark` element itself.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+ * Tokens -- shadcn/ui shape, slidown values.
+ * Raw vars live here; `@theme inline` below republishes them as utilities.
+ * ------------------------------------------------------------------------- */
+
+:root {
+	color-scheme: light;
+
+	--radius: 0.5rem;
+
+	--background: oklch(from #f4f4f6 l c h);
+	--foreground: oklch(from #1b1b1f l c h);
+
+	--card: oklch(from #ffffff l c h);
+	--card-foreground: oklch(from #1b1b1f l c h);
+
+	--popover: oklch(from #ffffff l c h);
+	--popover-foreground: oklch(from #1b1b1f l c h);
+
+	--primary: oklch(from #5a6eea l c h);
+	--primary-foreground: oklch(from #ffffff l c h);
+
+	--secondary: oklch(from #eceffc l c h);
+	--secondary-foreground: oklch(from #485ccb l c h);
+
+	--muted: oklch(from #fafafb l c h);
+	--muted-foreground: oklch(from #71717c l c h);
+
+	--accent: oklch(from #eceffc l c h);
+	--accent-foreground: oklch(from #485ccb l c h);
+
+	--border: oklch(from #e3e3e8 l c h);
+	--input: oklch(from #fafafb l c h);
+	--ring: oklch(from #5a6eea l c h);
+
+	--destructive: oklch(from #c83e4d l c h);
+	--destructive-foreground: oklch(from #ffffff l c h);
+
+	--success: oklch(from #237a57 l c h);
+	--success-foreground: oklch(from #ffffff l c h);
+
+	/* Charts -- drawn from the deck accent palette. */
+	--chart-1: oklch(from #c1592f l c h);
+	--chart-2: oklch(from #3a6ea5 l c h);
+	--chart-3: oklch(from #8fd3a8 l c h);
+	--chart-4: oklch(from #d79be8 l c h);
+	--chart-5: oklch(from #f0b429 l c h);
+
+	/* Sidebar -- unused by slidown today, present for shadcn drop-in parity. */
+	--sidebar: oklch(from #ffffff l c h);
+	--sidebar-foreground: oklch(from #1b1b1f l c h);
+	--sidebar-primary: oklch(from #5a6eea l c h);
+	--sidebar-primary-foreground: oklch(from #ffffff l c h);
+	--sidebar-accent: oklch(from #eceffc l c h);
+	--sidebar-accent-foreground: oklch(from #485ccb l c h);
+	--sidebar-border: oklch(from #e3e3e8 l c h);
+	--sidebar-ring: oklch(from #5a6eea l c h);
+}
+
+.dark {
+	color-scheme: dark;
+
+	--background: oklch(from #131316 l c h);
+	--foreground: oklch(from #ededf0 l c h);
+
+	--card: oklch(from #1b1b1f l c h);
+	--card-foreground: oklch(from #ededf0 l c h);
+
+	--popover: oklch(from #1b1b1f l c h);
+	--popover-foreground: oklch(from #ededf0 l c h);
+
+	--primary: oklch(from #93a8ff l c h);
+	--primary-foreground: oklch(from #131316 l c h);
+
+	--secondary: oklch(from #23232a l c h);
+	--secondary-foreground: oklch(from #d7deff l c h);
+
+	--muted: oklch(from #141418 l c h);
+	--muted-foreground: oklch(from #8e8e99 l c h);
+
+	--accent: oklch(from rgba(147, 168, 255, 0.14) l c h);
+	--accent-foreground: oklch(from #d7deff l c h);
+
+	--border: oklch(from #2c2c33 l c h);
+	--input: oklch(from #141418 l c h);
+	--ring: oklch(from #93a8ff l c h);
+
+	--destructive: oklch(from #ff7d8a l c h);
+	--destructive-foreground: oklch(from #1b0e11 l c h);
+
+	--success: oklch(from #53c28e l c h);
+	--success-foreground: oklch(from #092115 l c h);
+
+	--chart-1: oklch(from #e0603e l c h);
+	--chart-2: oklch(from #6fc3d6 l c h);
+	--chart-3: oklch(from #8fd3a8 l c h);
+	--chart-4: oklch(from #d79be8 l c h);
+	--chart-5: oklch(from #f0b429 l c h);
+
+	--sidebar: oklch(from #1b1b1f l c h);
+	--sidebar-foreground: oklch(from #ededf0 l c h);
+	--sidebar-primary: oklch(from #93a8ff l c h);
+	--sidebar-primary-foreground: oklch(from #131316 l c h);
+	--sidebar-accent: oklch(from #23232a l c h);
+	--sidebar-accent-foreground: oklch(from #d7deff l c h);
+	--sidebar-border: oklch(from #2c2c33 l c h);
+	--sidebar-ring: oklch(from #93a8ff l c h);
+}
+
+@theme inline {
+	/*
+	 * Radius ladder. --radius: 0.5rem makes these land exactly on the roles
+	 * documented in DESIGN.md and components/AGENTS.md:
+	 *   sm  4px -- inline elements
+	 *   md  6px -- badges, menu/select item highlights
+	 *   lg  8px -- controls: buttons, inputs, textareas, select triggers
+	 *   xl 12px -- floating surfaces: dropdown, popover, select content
+	 */
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-success: var(--success);
+	--color-success-foreground: var(--success-foreground);
+
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
+}
+
+@theme {
+	--font-sans: "Plus Jakarta Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+	--font-serif: "Source Serif 4", ui-serif, Georgia, serif;
+	--font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+		monospace;
+
+	/* Deck surfaces pick their own family independently of the UI shell. */
+	--font-deck-sans: "Plus Jakarta Sans", sans-serif;
+	--font-deck-serif: "Source Serif 4", serif;
+	--font-deck-mono: "IBM Plex Mono", monospace;
+
+	/* Floating surfaces open with this; they close instantly (DESIGN.md). */
+	--animate-pop-in: pop-in 130ms ease-out;
+	--animate-toast-pop: toast-pop 2.6s ease-in-out;
+
+	@keyframes pop-in {
+		from {
+			opacity: 0;
+			transform: translateY(6px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes toast-pop {
+		0% {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+		10% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		90% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		100% {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+
+	html,
+	body,
+	#root {
+		min-height: 100%;
+	}
+
+	html {
+		background: var(--background);
+	}
+
+	body {
+		@apply bg-background text-foreground font-sans;
+		margin: 0;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+	}
+
+	::selection {
+		background: color-mix(in oklch, var(--primary) 18%, transparent);
+		color: var(--foreground);
+	}
+}
