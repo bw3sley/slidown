@@ -143,10 +143,10 @@
         </button>
         <sc-if value="{{ shareDropdownOpen }}" hint-placeholder-val="{{ false }}">
           <div style="{{ shareDropdownStyle }}">
-            <div style="{{ shareItemStyle }}" style-hover="background:rgba(130,130,145,.12)" onClick="{{ copyLink }}">
+            <div style="{{ shareItemDisabledStyle }}">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
               <span style="flex:1">Copy link</span>
-              <span style="{{ shareHintStyle }}">local</span>
+              <span style="{{ shareHintStyle }}">soon</span>
             </div>
             <div style="{{ dropdownSepStyle }}"></div>
             <div style="{{ shareItemStyle }}" style-hover="background:rgba(130,130,145,.12)" onClick="{{ exportPDF }}">
@@ -1194,6 +1194,7 @@ class Component extends DCLogic {
       fontOptions,
       shareDropdownStyle: { ...dropdownPanelStyle, minWidth: 206 },
       shareItemStyle: { display: 'flex', alignItems: 'center', gap: 10, padding: '9px 10px', borderRadius: 8, cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: chrome.ink, transition: 'background .14s' },
+      shareItemDisabledStyle: { display: 'flex', alignItems: 'center', gap: 10, padding: '9px 10px', borderRadius: 8, cursor: 'not-allowed', fontSize: 13.5, fontWeight: 500, color: chrome.ink, opacity: .5 },
       shareHintStyle: { fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.05em', color: chrome.inkMuted, background: chrome.bg, padding: '2px 6px', borderRadius: 5 },
       copyLink: this.copyLink,
       exportPDF: this.exportPDF,
