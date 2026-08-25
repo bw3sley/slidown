@@ -277,9 +277,7 @@
             </sc-for>
           </div>
 
-          <sc-if value="{{ showKeyInput }}" hint-placeholder-val="{{ false }}">
-            <input type="password" placeholder="{{ keyPlaceholder }}" value="{{ currentProviderKey }}" onChange="{{ onKeyChange }}" style="{{ aiInputStyle }}" />
-          </sc-if>
+          <input type="password" placeholder="{{ keyPlaceholder }}" value="{{ currentProviderKey }}" onChange="{{ onKeyChange }}" style="{{ aiInputStyle }}" />
 
           <textarea placeholder="Describe the deck you want — or leave blank and press Evaluate to critique the current one" value="{{ aiPrompt }}" onChange="{{ onPromptChange }}" style="{{ aiTextareaStyle }}"></textarea>
 
@@ -441,141 +439,17 @@ const DECK_FONTS = {
 };
 const LAYOUT_LABELS = { stack: 'Stack', title: 'Title', split: 'Split', 'full-bleed': 'Full bleed', bento: 'Bento', 'media-top': 'Media top', columns: 'Columns', frame: 'Frame' };
 
-const SKILL_MD = [
-  '# slidown Slides — authoring skill',
-  '',
-  'Write presentations as plain markdown that slidown renders as slides.',
-  'Paste this file into Claude, ChatGPT or Gemini as a project instruction or',
-  'knowledge file, then ask it for a deck and paste the result into slidown.',
-  '',
-  '## Output contract',
-  '',
-  'Return ONLY markdown. No commentary, no code fences around the whole deck.',
-  '',
-  '## Slide separator',
-  '',
-  'A line containing only three dashes starts a new slide:',
-  '',
-  '```',
-  '# First slide',
-  '---',
-  '# Second slide',
-  '```',
-  '',
-  '## Per-slide front matter',
-  '',
-  'A slide may open with a `+++` block. All keys are optional.',
-  '',
-  '```',
-  '+++',
-  'layout: split',
-  'header: Q3 Review',
-  'footer: Acme Inc.',
-  'date: true',
-  '+++',
-  '```',
-  '',
-  '| Key | Values | Effect |',
-  '| --- | --- | --- |',
-  '| `layout` | `stack` (default), `title`, `split`, `full-bleed`, `bento`, `media-top`, `columns`, `frame` | Slide composition |',
-  '| `header` | any text | Small uppercase label above the slide |',
-  '| `footer` | any text | Text pinned to the bottom |',
-  '| `date` | `true` | Prints today\'s date beside the footer |',
-  '',
-  '## Layouts — when to use which',
-  '',
-  '- **title** — opening slide, section breaks, a single closing statement.',
-  '  Content is centred and set larger. Keep it to one heading plus one line.',
-  '- **split** — text on the left, image on the right. Requires an image.',
-  '  Best for a claim plus supporting visual. Max 4 bullets.',
-  '- **full-bleed** — image fills the slide, text sits on a dark scrim at the',
-  '  bottom. Requires an image. Use for emotional beats and chapter openers.',
-  '  Keep text to a heading and at most one line — it must stay legible.',
-  '- **stack** — default. Heading, then body, image below if present.',
-  '- **bento** — header and body render as separate rounded panels beside a',
-  '  tall image card. Requires an image. Good for a feature highlight.',
-  '- **media-top** — image spans the top like a card header, text below.',
-  '  Requires an image. Good for blog-style or article slides.',
-  '- **columns** — body text flows into two columns. No image needed. Use for',
-  '  dense text that would run too long as a single column.',
-  '- **frame** — a single image shown small and bordered like a framed photo,',
-  '  centred text below. Requires an image. Use for a quiet, editorial beat.',
-  '',
-  '## Content elements',
-  '',
-  '```',
-  '# Big title          (one per deck, usually the opener)',
-  '## Slide title       (the normal slide heading)',
-  '### Sub-heading      (use sparingly)',
-  '',
-  'Body copy as a normal paragraph.',
-  '',
-  '- Bullet',
-  '- Bullet',
-  '',
-  '> A quote gets an accent rule and italics.',
-  '',
-  '![Descriptive alt text](https://images.unsplash.com/photo-...)',
-  '```',
-  '',
-  'Inline emphasis: `**bold**`, `*italic*` and `` `code` ``.',
-  '',
-  '## Rules that keep decks readable',
-  '',
-  "1. **One idea per slide.** If a slide needs two headings, it is two slides.",
-  '2. **Six lines maximum**, counting bullets. Prefer three or four.',
-  '3. **Ten words per bullet maximum.** Cut articles before cutting meaning.',
-  '4. **One image per slide.** A second image is ignored.',
-  '5. **Write bullets as statements, not labels.** "Churn fell 12% in Q3", not',
-  '   "Churn".',
-  '6. **No filler slides** — no "Agenda" unless the deck is over ten slides, no',
-  '   "Thank you" slide with nothing on it, no restating the title.',
-  '7. **Vary the rhythm.** Open with `title`, break sections with `title` or',
-  '   `full-bleed`, keep the body on `stack` and `split`. Never run more than',
-  '   three identical layouts back to back.',
-  '8. **Images must earn their place.** Use one when it carries meaning, not for',
-  '   decoration. Always write real alt text.',
-  '9. **Set `footer` and `date` once** on the opening slide and on any slide',
-  '   that may be screenshotted alone — not on every slide.',
-  '10. **Numbers need context.** "$1.2M ARR, up 40% YoY" beats "$1.2M".',
-  '',
-  '## Image sources',
-  '',
-  'Use real, working photo URLs. Unsplash direct links work well:',
-  '',
-  '`https://images.unsplash.com/photo-<id>?auto=format&fit=crop&w=1600&q=60`',
-  '',
-  'Use `w=1600` for `full-bleed`, `w=1200` for `split` and `stack`.',
-  '',
-  '## Worked example',
-  '',
-  '```',
-  '+++',
-  'layout: title',
-  'footer: Acme Inc.',
-  'date: true',
-  '+++',
-  '# Retention is our growth engine',
-  'What changed in Q3, and what we do next.',
-  '---',
-  '+++',
-  'layout: split',
-  '+++',
-  '## Churn fell 12% after onboarding v2',
-  '- Guided setup replaced the empty dashboard',
-  '- Time-to-first-value dropped from 4 days to 40 minutes',
-  '- Support tickets in week one fell by half',
-  '',
-  '![A team reviewing analytics on a wall display](https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=60)',
-  '---',
-  '+++',
-  'layout: full-bleed',
-  '+++',
-  '## Next: make week two as good as day one',
-  '',
-  '![Sunrise over a mountain range](https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=60)',
-  '```',
-].join('\n');
+const SKILL_URL = './assets/skills/slidown-slides/SKILL.md';
+
+// Mid-tier workhorse model per provider: strong enough for a deck, cheap enough to iterate.
+const AI_PROVIDERS = {
+  claude: { label: 'Claude', keyPlaceholder: 'Anthropic API key', model: 'claude-sonnet-5' },
+  openai: { label: 'OpenAI', keyPlaceholder: 'OpenAI API key', model: 'gpt-4o-mini' },
+  gemini: { label: 'Gemini', keyPlaceholder: 'Gemini API key', model: 'gemini-3.8-flash' },
+};
+
+// Only used if SKILL.md can't be fetched — the full authoring guide lives in that file.
+const FALLBACK_SLIDE_PROMPT = "You write concise slide decks in this exact markdown format: slides separated by a line containing only ---. Use # or ## for headings, - for bullets, > for a quote, and at most one ![alt](url) image per slide using real unsplash.com photo URLs. A slide may start with a +++ block setting layout (title, split, full-bleed, stack, bento, media-top, columns or frame — bento/media-top/split/full-bleed/frame require an image), header, footer or date. Return ONLY the markdown, no commentary, no code fences.";
 
 const UI_FONT = "'Plus Jakarta Sans', sans-serif";
 
@@ -627,8 +501,10 @@ class Component extends DCLogic {
         this.state.appDark = saved.appDark ?? this.state.appDark;
         this.state.customAccent = saved.customAccent ?? null;
       }
-      const keys = JSON.parse(localStorage.getItem('folio-ai-keys') || 'null');
+      const keys = JSON.parse(localStorage.getItem('slidown-ai-keys') || 'null');
       if (keys) this.state.apiKeys = keys;
+      const prov = localStorage.getItem('slidown-ai-provider');
+      if (prov && AI_PROVIDERS[prov]) this.state.apiProvider = prov;
     } catch (e) {}
 
     import('./slideParser.js').then((mod) => {
@@ -782,16 +658,25 @@ class Component extends DCLogic {
   restoreTutorial = () => { this.setEditorValue(DEFAULT_MD); this.setState({ activeSlide: 0 }); };
 
   downloadSkill = () => {
-    const blob = new Blob([SKILL_MD], { type: 'text/markdown;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'slidown-slides.skill.md';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    this.showToast('Skill file downloaded');
+    fetch(SKILL_URL)
+      .then((res) => {
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        return res.blob();
+      })
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'SKILL.md';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        this.showToast('Skill file downloaded');
+      })
+      .catch(() => {
+        this.showToast('Could not download skill file');
+      });
   };
 
   copyLink = () => {
@@ -853,18 +738,21 @@ class Component extends DCLogic {
     this.setState({ activeSlide: i });
   };
 
-  selectProvider = (p) => this.setState({ apiProvider: p, aiError: '' });
+  selectProvider = (p) => {
+    this.setState({ apiProvider: p, aiError: '' });
+    try { localStorage.setItem('slidown-ai-provider', p); } catch (err) {}
+  };
   onKeyChange = (e) => {
     const keys = { ...this.state.apiKeys, [this.state.apiProvider]: e.target.value };
     this.setState({ apiKeys: keys });
-    try { localStorage.setItem('folio-ai-keys', JSON.stringify(keys)); } catch (err) {}
+    try { localStorage.setItem('slidown-ai-keys', JSON.stringify(keys)); } catch (err) {}
   };
   onPromptChange = (e) => this.setState({ aiPrompt: e.target.value });
 
   generateDeck = async () => {
     if (this.state.aiLoading) return;
     this.setState({ aiLoading: true, aiError: '', aiFeedback: '' });
-    const sys = "You write concise slide decks in this exact markdown format: slides separated by a line containing only ---. Use # or ## for headings, - for bullets, > for a quote, and at most one ![alt](url) image per slide using real unsplash.com photo URLs. A slide may start with a +++ block setting layout (title, split, full-bleed, stack, bento, media-top, columns or frame — bento/media-top/split/full-bleed/frame require an image), header, footer or date. Return ONLY the markdown, no commentary, no code fences.";
+    const sys = await this.loadSlidePrompt();
     const userMsg = this.state.aiPrompt.trim() || 'Create a short 5-slide deck introducing a new product.';
     try {
       const text = await this.callModel(sys, userMsg);
@@ -880,7 +768,8 @@ class Component extends DCLogic {
   evaluateDeck = async () => {
     if (this.state.aiLoading) return;
     this.setState({ aiLoading: true, aiError: '', aiFeedback: '' });
-    const sys = "You are a concise presentation coach. Give 3-5 short, specific bullet critiques (structure, clarity, pacing) of the deck markdown you're given. Return plain text lines starting with '- ', no other commentary.";
+    const skill = await this.loadSlidePrompt();
+    const sys = skill + "\n\n---\n\nYou are a concise presentation coach. Given a deck written in the markdown format above, give 3-5 short, specific bullet critiques (structure, clarity, pacing, and adherence to the rules above). Return plain text lines starting with '- ', no other commentary.";
     try {
       const text = await this.callModel(sys, this.state.markdown);
       if (!text || !text.trim()) throw new Error('Empty response from model.');
@@ -890,29 +779,62 @@ class Component extends DCLogic {
     }
   };
 
+  // The downloadable skill file is the single source of truth for the slide dialect.
+  // Fetched once, cached on the instance, YAML front matter stripped.
+  loadSlidePrompt = async () => {
+    if (this._slidePrompt) return this._slidePrompt;
+    try {
+      const res = await fetch(SKILL_URL);
+      if (!res.ok) throw new Error('skill fetch failed: ' + res.status);
+      const md = (await res.text()).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '').trim();
+      this._slidePrompt = md || FALLBACK_SLIDE_PROMPT;
+    } catch (err) {
+      this._slidePrompt = FALLBACK_SLIDE_PROMPT;
+    }
+    return this._slidePrompt;
+  };
+
   callModel = async (sys, userMsg) => {
     const { apiProvider, apiKeys } = this.state;
+    const model = (AI_PROVIDERS[apiProvider] || {}).model;
     if (apiProvider === 'claude') {
-      return window.claude.complete({ system: sys, messages: [{ role: 'user', content: userMsg }], max_tokens: 2000 });
+      if (!apiKeys.claude) throw new Error('Add an Anthropic API key first.');
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKeys.claude,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
+        body: JSON.stringify({ model, max_tokens: 8000, system: sys, messages: [{ role: 'user', content: userMsg }] }),
+      });
+      if (!res.ok) throw new Error('Anthropic request failed (' + res.status + ').');
+      const data = await res.json();
+      if (data.stop_reason === 'refusal') throw new Error('The model declined this request.');
+      return (data.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('');
     }
     if (apiProvider === 'gemini') {
       if (!apiKeys.gemini) throw new Error('Add a Gemini API key first.');
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKeys.gemini}`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKeys.gemini },
         body: JSON.stringify({ contents: [{ parts: [{ text: sys + '\n\n' + userMsg }] }] }),
       });
       if (!res.ok) throw new Error('Gemini request failed (' + res.status + ').');
       const data = await res.json();
       return data.candidates && data.candidates[0] && data.candidates[0].content.parts[0].text;
     }
-    if (!apiKeys.openai) throw new Error('Add an OpenAI API key first.');
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + apiKeys.openai },
-      body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'system', content: sys }, { role: 'user', content: userMsg }] }),
-    });
-    if (!res.ok) throw new Error('OpenAI request failed (' + res.status + ').');
-    const data = await res.json();
-    return data.choices && data.choices[0] && data.choices[0].message.content;
+    if (apiProvider === 'openai') {
+      if (!apiKeys.openai) throw new Error('Add an OpenAI API key first.');
+      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + apiKeys.openai },
+        body: JSON.stringify({ model, messages: [{ role: 'system', content: sys }, { role: 'user', content: userMsg }] }),
+      });
+      if (!res.ok) throw new Error('OpenAI request failed (' + res.status + ').');
+      const data = await res.json();
+      return data.choices && data.choices[0] && data.choices[0].message.content;
+    }
+    throw new Error('Unknown provider.');
   };
 
   renderVals() {
@@ -996,13 +918,9 @@ class Component extends DCLogic {
       };
     });
 
-    const providerOptions = [
-      { key: 'claude', label: 'Claude' },
-      { key: 'openai', label: 'OpenAI' },
-      { key: 'gemini', label: 'Gemini' },
-    ].map((p) => {
-      const isActive = p.key === s.apiProvider;
-      return { ...p, onSelect: () => this.selectProvider(p.key), pillStyle: { padding: '6px 12px', borderRadius: 999, fontSize: 12.5, fontWeight: 600, cursor: 'pointer', transition: 'border-color .14s', border: '1.5px solid ' + (isActive ? chrome.accent : chrome.border), background: isActive ? chrome.accentSoft : 'transparent', color: isActive ? chrome.accent : chrome.inkMuted } };
+    const providerOptions = Object.keys(AI_PROVIDERS).map((key) => {
+      const isActive = key === s.apiProvider;
+      return { key, label: AI_PROVIDERS[key].label, onSelect: () => this.selectProvider(key), pillStyle: { padding: '6px 12px', borderRadius: 999, fontSize: 12.5, fontWeight: 600, cursor: 'pointer', transition: 'border-color .14s', border: '1.5px solid ' + (isActive ? chrome.accent : chrome.border), background: isActive ? chrome.accentSoft : 'transparent', color: isActive ? chrome.accent : chrome.inkMuted } };
     });
 
     const styleTags = (html) => html
@@ -1258,8 +1176,7 @@ class Component extends DCLogic {
       aiTitleStyle: { fontWeight: 700, fontSize: 15 },
       aiCloseStyle: { width: 26, height: 26, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: chrome.inkMuted, transition: 'background .14s' },
       providerOptions,
-      showKeyInput: s.apiProvider !== 'claude',
-      keyPlaceholder: s.apiProvider === 'openai' ? 'OpenAI API key' : 'Gemini API key',
+      keyPlaceholder: (AI_PROVIDERS[s.apiProvider] || {}).keyPlaceholder || 'API key',
       currentProviderKey: s.apiKeys[s.apiProvider] || '',
       onKeyChange: this.onKeyChange,
       aiInputStyle: { border: '1.5px solid ' + chrome.border, borderRadius: 8, padding: '9px 10px', fontSize: 13, fontFamily: UI_FONT, background: chrome.field, color: chrome.ink, outline: 'none' },
