@@ -6,6 +6,11 @@
 <title>Slidown — Markdown to slides</title>
 <meta name="description" content="Turn Markdown writing into presentation-ready slide decks fast — no PowerPoint busywork, with AI assistance and customizable themes.">
 
+<!-- Static light-theme fallback; applyBrandChrome() swaps both of these to match
+     the app's dark toggle once the runtime boots. -->
+<link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+<meta name="theme-color" content="#FFFFFF">
+
 <meta property="og:type" content="website">
 <meta property="og:title" content="Slidown — Markdown to slides">
 <meta property="og:description" content="Turn Markdown writing into presentation-ready slide decks fast — no PowerPoint busywork, with AI assistance and customizable themes.">
@@ -454,6 +459,38 @@ const FALLBACK_SLIDE_PROMPT = "You write concise slide decks in this exact markd
 
 const UI_FONT = "'Plus Jakarta Sans', sans-serif";
 
+// App chrome, keyed by dark mode. Single source of truth: renderVals() styles the
+// UI from this, and the favicon is generated from the same accent pair so the tab
+// icon can never drift from the header mark.
+const APP_CHROME = {
+  light: { bg: '#F4F4F6', surface: '#FFFFFF', border: '#E3E3E8', ink: '#1B1B1F', inkMuted: '#71717C', accent: '#2B4ACB', accentSoft: '#ECEFFC', onAccent: '#FFFFFF', field: '#FAFAFB' },
+  dark:  { bg: '#131316', surface: '#1B1B1F', border: '#2C2C33', ink: '#EDEDF0', inkMuted: '#8E8E99', accent: '#93A8FF', accentSoft: 'rgba(147,168,255,.14)', onAccent: '#131316', field: '#141418' },
+};
+
+// The Slidown mark: a Lucide "presentation" glyph on a rounded square. Mirrors the
+// header markup, scaled to a 32 box (rx 10 keeps the header's 9/29 corner ratio,
+// the glyph fills 20 of 32 units) with a heavier stroke so it survives 16px.
+const BRAND_MARK_PATHS = ['M2 3h20', 'M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3', 'm7 21 5-5 5 5'];
+
+function brandMarkSvg(accent, onAccent) {
+  const paths = BRAND_MARK_PATHS.map((d) => '<path d="' + d + '"/>').join('');
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">'
+    + '<rect width="32" height="32" rx="10" fill="' + accent + '"/>'
+    + '<g transform="translate(6 6) scale(0.833333)" fill="none" stroke="' + onAccent
+    + '" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">' + paths + '</g></svg>';
+}
+
+// Repoint the favicon and mobile browser chrome at the active theme. Driven by the
+// app's own appDark toggle rather than prefers-color-scheme, so the tab icon always
+// matches the header (appDark is a manual, persisted preference and ignores the OS).
+function applyBrandChrome(dark) {
+  const c = APP_CHROME[dark ? 'dark' : 'light'];
+  const icon = document.querySelector('link[rel="icon"]');
+  if (icon) icon.href = 'data:image/svg+xml,' + encodeURIComponent(brandMarkSvg(c.accent, c.onAccent));
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  if (themeColor) themeColor.content = c.surface;
+}
+
 function getBoardId() {
   const p = window.location.pathname.replace(/^\/+|\/+$/g, '');
   return p || '__root__';
@@ -516,6 +553,7 @@ class Component extends DCLogic {
 
     this._lastDark = this.state.appDark;
     this._lastScale = this.state.stageScale;
+    applyBrandChrome(this.state.appDark);
     document.addEventListener('mousedown', this.handleDocClick);
     this.loadMonaco();
     this.measureStage();
@@ -621,6 +659,7 @@ class Component extends DCLogic {
     const { appDark, stageScale } = this.state;
     if (this._lastDark !== appDark) {
       this._lastDark = appDark;
+      applyBrandChrome(appDark);
       if (this.monacoEditor && window.monaco) {
         window.monaco.editor.setTheme(appDark ? 'vs-dark' : 'vs');
         requestAnimationFrame(this.refreshEditor);
@@ -841,9 +880,7 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     const dark = s.appDark;
-    const chrome = dark
-      ? { bg: '#131316', surface: '#1B1B1F', border: '#2C2C33', ink: '#EDEDF0', inkMuted: '#8E8E99', accent: '#93A8FF', accentSoft: 'rgba(147,168,255,.14)', onAccent: '#131316', field: '#141418' }
-      : { bg: '#F4F4F6', surface: '#FFFFFF', border: '#E3E3E8', ink: '#1B1B1F', inkMuted: '#71717C', accent: '#2B4ACB', accentSoft: '#ECEFFC', onAccent: '#FFFFFF', field: '#FAFAFB' };
+    const chrome = APP_CHROME[dark ? 'dark' : 'light'];
 
     const baseTheme = DECK_THEMES[s.deckTheme] || DECK_THEMES.paper;
     const deckTheme = { ...baseTheme, accent: s.customAccent || baseTheme.accent };
