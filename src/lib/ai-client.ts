@@ -1,10 +1,10 @@
 import { AI_PROVIDERS, type AiProviderId } from "@/constants/ai-providers";
+
 import { askClaude } from "@/http/ask-claude";
 import { askGemini } from "@/http/ask-gemini";
 import { askOpenAi } from "@/http/ask-openai";
-import { AiClientError } from "@/lib/ai-error";
 
-export { AiClientError };
+import { AiClientError } from "@/http/errors/ai-error";
 
 const REQUEST_BY_PROVIDER: Record<
 	AiProviderId,
@@ -28,10 +28,16 @@ export async function callModel(
 			`Add ${article} ${AI_PROVIDERS[provider].keyPlaceholder} first.`,
 		);
 	}
+
 	try {
 		return await REQUEST_BY_PROVIDER[provider](apiKey, systemPrompt, userMessage);
-	} catch (err) {
-		if (err instanceof AiClientError) throw err;
+	}
+
+	catch (err) {
+		if (err instanceof AiClientError) {
+			throw err;
+		}
+
 		throw new AiClientError("Network error while contacting the model.", err);
 	}
 }

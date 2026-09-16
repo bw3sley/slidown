@@ -1,5 +1,5 @@
 import { AI_PROVIDERS } from "@/constants/ai-providers";
-import { AiClientError } from "@/lib/ai-error";
+import { AiClientError } from "@/http/errors/ai-error";
 
 interface ClaudeResponse {
 	stop_reason?: string;

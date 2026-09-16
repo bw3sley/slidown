@@ -1,6 +1,6 @@
 import { AI_PROVIDERS } from "@/constants/ai-providers";
 
-import { AiClientError } from "@/lib/ai-error";
+import { AiClientError } from "@/http/errors/ai-error";
 
 interface OpenAiResponse {
 	choices?: Array<{ message?: { content?: string } }>;
