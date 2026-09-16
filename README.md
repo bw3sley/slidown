@@ -1,6 +1,6 @@
 # Slidown
 
-![Cover](./assets/cover.png)
+![Cover](./src/assets/cover.png)
 
 ## Idea
 
