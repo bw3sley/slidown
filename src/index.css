@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-/*
- * Dark mode is an explicit class on <html>, not `prefers-color-scheme` --
- * slidown's theme toggle is manual and persisted. `:where()` keeps the
- * variant at zero specificity and also matches the `.dark` element itself.
- */
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ---------------------------------------------------------------------------
@@ -39,7 +34,7 @@
 	--accent-foreground: oklch(from #485ccb l c h);
 
 	--border: oklch(from #e3e3e8 l c h);
-	--input: oklch(from #fafafb l c h);
+	--input: oklch(from #e3e3e8 l c h);
 	--ring: oklch(from #5a6eea l c h);
 
 	--destructive: oklch(from #c83e4d l c h);
@@ -48,14 +43,12 @@
 	--success: oklch(from #237a57 l c h);
 	--success-foreground: oklch(from #ffffff l c h);
 
-	/* Charts -- drawn from the deck accent palette. */
 	--chart-1: oklch(from #c1592f l c h);
 	--chart-2: oklch(from #3a6ea5 l c h);
 	--chart-3: oklch(from #8fd3a8 l c h);
 	--chart-4: oklch(from #d79be8 l c h);
 	--chart-5: oklch(from #f0b429 l c h);
 
-	/* Sidebar -- unused by slidown today, present for shadcn drop-in parity. */
 	--sidebar: oklch(from #ffffff l c h);
 	--sidebar-foreground: oklch(from #1b1b1f l c h);
 	--sidebar-primary: oklch(from #5a6eea l c h);
@@ -91,7 +84,7 @@
 	--accent-foreground: oklch(from #d7deff l c h);
 
 	--border: oklch(from #2c2c33 l c h);
-	--input: oklch(from #141418 l c h);
+	--input: oklch(from #2c2c33 l c h);
 	--ring: oklch(from #93a8ff l c h);
 
 	--destructive: oklch(from #ff7d8a l c h);
@@ -117,14 +110,6 @@
 }
 
 @theme inline {
-	/*
-	 * Radius ladder. --radius: 0.5rem makes these land exactly on the roles
-	 * documented in DESIGN.md and components/AGENTS.md:
-	 *   sm  4px -- inline elements
-	 *   md  6px -- badges, menu/select item highlights
-	 *   lg  8px -- controls: buttons, inputs, textareas, select triggers
-	 *   xl 12px -- floating surfaces: dropdown, popover, select content
-	 */
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
@@ -174,12 +159,13 @@
 	--font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
 		monospace;
 
-	/* Deck surfaces pick their own family independently of the UI shell. */
 	--font-deck-sans: "Plus Jakarta Sans", sans-serif;
 	--font-deck-serif: "Source Serif 4", serif;
 	--font-deck-mono: "IBM Plex Mono", monospace;
 
-	/* Floating surfaces open with this; they close instantly (DESIGN.md). */
+	--text-xxs: 0.625rem; 
+	--text-xxs--line-height: 0.875rem; 
+
 	--animate-pop-in: pop-in 130ms ease-out;
 	--animate-toast-pop: toast-pop 2.6s ease-in-out;
 

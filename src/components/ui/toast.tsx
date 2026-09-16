@@ -77,10 +77,6 @@ type ToasterProps = VariantProps<typeof toastVariants> & {
 	swipeDirection?: "up" | "down" | "left" | "right";
 };
 
-/* ---------------------------------------------------------------------------
- * Store -- a module-level reducer + listener list (the shadcn/ui pattern), so
- * `toast()` can be called from anywhere without threading a provider through.
- * ------------------------------------------------------------------------- */
 
 const TOAST_LIMIT = 3;
 const TOAST_REMOVE_DELAY = 4000;
@@ -227,9 +223,6 @@ function useToast() {
 	return { toasts: state.toasts, toast: createToast, dismiss: dismissToast };
 }
 
-/* ---------------------------------------------------------------------------
- * Components
- * ------------------------------------------------------------------------- */
 
 const ToastProvider = ToastPrimitive.Provider;
 
