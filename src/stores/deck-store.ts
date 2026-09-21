@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+
 import { create } from "zustand";
 import { createJSONStorage, persist, type StateStorage } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -7,15 +8,21 @@ import {
 	type DeckFontId,
 	DECK_FONT_ORDER,
 } from "@/constants/deck-fonts";
+
 import {
 	type DeckTheme,
 	type DeckThemeId,
 	resolveDeckTheme,
 } from "@/constants/deck-themes";
+
 import type { SlideLayoutKey } from "@/constants/slide-layouts";
+
 import { DEFAULT_MD } from "@/constants/starter-deck";
+
 import { debounce } from "@/hooks/use-debounce";
+
 import { getBoardStorageKey } from "@/lib/board-storage";
+
 import {
 	joinSlides,
 	parseDeck,

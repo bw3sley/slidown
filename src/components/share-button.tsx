@@ -22,6 +22,7 @@ const soonBadgeClassName = "font-bold uppercase tracking-wide";
 
 export function ShareButton() {
 	const open = useUiStore((s) => s.openPanel === "share");
+
 	const { download } = useDownloadSkill();
 
 	function handleOpenChange(next: boolean) {
@@ -35,11 +36,12 @@ export function ShareButton() {
 	return (
 		<DropdownMenu open={open} onOpenChange={handleOpenChange}>
 			<DropdownMenuTrigger asChild>
-				<Button size="md">
+				<Button size="md" className="ml-3">
 					<Share2 className="size-3.5" />
 					Share
 				</Button>
 			</DropdownMenuTrigger>
+
 			<DropdownMenuContent size="md">
 				<DropdownMenuItem disabled>
 					<Link2 className="size-3.5" />
@@ -48,19 +50,26 @@ export function ShareButton() {
 						Soon
 					</Badge>
 				</DropdownMenuItem>
+
 				<DropdownMenuSeparator />
+
 				<DropdownMenuItem onClick={handleExportPdf}>
 					<FileDown className="size-3.5" />
 					Export as PDF
 				</DropdownMenuItem>
+
 				<DropdownMenuItem disabled>
 					<FileType2 className="size-3.5" />
+
 					<span className="flex-1">Export as PPTX</span>
+
 					<Badge variant="muted" size="sm" className={soonBadgeClassName}>
 						Soon
 					</Badge>
 				</DropdownMenuItem>
+
 				<DropdownMenuSeparator />
+
 				<DropdownMenuItem onClick={() => void download()}>
 					<Download className="size-3.5" />
 					Download skill

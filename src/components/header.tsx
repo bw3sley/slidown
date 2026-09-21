@@ -4,7 +4,6 @@ import { DarkModeToggle } from "@/components/dark-mode-toggle";
 import { FontPicker } from "@/components/font-picker";
 import { ShareButton } from "@/components/share-button";
 import { ThemePicker } from "@/components/theme-picker";
-import { Separator } from "@/components/ui/separator";
 
 export function Header() {
 	return (
@@ -20,10 +19,6 @@ export function Header() {
 				<ThemePicker />
 				<FontPicker />
 				<DarkModeToggle />
-				<Separator
-					orientation="vertical"
-					className="mx-1.25 data-[orientation=vertical]:h-5"
-				/>
 				<ShareButton />
 			</div>
 		</header>

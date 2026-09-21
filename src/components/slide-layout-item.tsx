@@ -31,7 +31,7 @@ export function SlideLayoutItem({
 		>
 			<div
 				className={cn(
-					"relative mx-auto h-10.5 w-16 overflow-hidden rounded-md border",
+					"relative mx-auto h-11 w-16 overflow-hidden rounded-md border",
 					isActive
 						? "border-2 shadow-[0_0_0_3px_var(--layout-picker-ring)]"
 						: "border-[rgba(130,130,145,.32)]",
@@ -50,10 +50,7 @@ export function SlideLayoutItem({
 			</div>
 
 			<span
-				className={cn(
-					"text-xxs font-semibold",
-					isActive ? "" : "text-muted-foreground",
-				)}
+				className="text-xxs font-semibold text-muted-foreground"
 				style={{ color: isActive ? accent : undefined }}
 			>
 				{label}
