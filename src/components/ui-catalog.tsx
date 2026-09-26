@@ -16,6 +16,7 @@ import {
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import * as z from "zod";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -77,7 +78,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Toaster, useToast } from "@/components/ui/toast";
+import { Toaster } from "@/components/ui/sonner";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
 	Tooltip,
@@ -580,11 +581,9 @@ function FloatingSection() {
 }
 
 function FeedbackSection() {
-	const { toast } = useToast();
-
 	return (
 		<Section
-			description="Alert variants, the toast store, and the empty state."
+			description="Alert variants, sonner toasts, and the empty state."
 			title="Feedback"
 		>
 			<div className="grid gap-3">
@@ -619,9 +618,8 @@ function FeedbackSection() {
 				<Button
 					data-testid="fire-toast"
 					onClick={function fire() {
-						toast({
+						toast("Skill file downloaded", {
 							description: "slidown-slides/SKILL.md",
-							title: "Skill file downloaded",
 						});
 					}}
 					variant="outline"
@@ -630,10 +628,8 @@ function FeedbackSection() {
 				</Button>
 				<Button
 					onClick={function fire() {
-						toast({
+						toast.error("Could not generate", {
 							description: "The API key was rejected.",
-							title: "Could not generate",
-							variant: "destructive",
 						});
 					}}
 					variant="outline"
@@ -740,9 +736,7 @@ function SurfaceSection() {
 	);
 }
 
-function ValidatedFormSection() {
-	const { toast } = useToast();
-	const form = useForm<DemoValues>({
+function ValidatedFormSection() {	const form = useForm<DemoValues>({
 		defaultValues: {
 			accent: "",
 			autosave: false,
@@ -764,10 +758,8 @@ function ValidatedFormSection() {
 				<form
 					className="grid gap-5"
 					onSubmit={form.handleSubmit(function onValid(values) {
-						toast({
+						toast.success("Form submitted", {
 							description: `${values.provider} / ${values.theme}`,
-							title: "Form submitted",
-							variant: "success",
 						});
 					})}
 				>

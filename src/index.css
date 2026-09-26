@@ -2,11 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ---------------------------------------------------------------------------
- * Tokens -- shadcn/ui shape, slidown values.
- * Raw vars live here; `@theme inline` below republishes them as utilities.
- * ------------------------------------------------------------------------- */
-
 :root {
 	color-scheme: light;
 
@@ -167,7 +162,6 @@
 	--text-xxs--line-height: 0.875rem; 
 
 	--animate-pop-in: pop-in 130ms ease-out;
-	--animate-toast-pop: toast-pop 2.6s ease-in-out;
 
 	@keyframes pop-in {
 		from {
@@ -177,25 +171,6 @@
 		to {
 			opacity: 1;
 			transform: translateY(0) scale(1);
-		}
-	}
-
-	@keyframes toast-pop {
-		0% {
-			opacity: 0;
-			transform: translateY(8px);
-		}
-		10% {
-			opacity: 1;
-			transform: translateY(0);
-		}
-		90% {
-			opacity: 1;
-			transform: translateY(0);
-		}
-		100% {
-			opacity: 0;
-			transform: translateY(8px);
 		}
 	}
 }

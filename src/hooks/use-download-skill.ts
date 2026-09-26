@@ -1,12 +1,11 @@
 import { useState } from "react";
+import { toast } from "sonner";
 
-import { useToast } from "@/components/ui/toast";
 import skillMarkdown from "@/skills/slidown-slides/SKILL.md?raw";
 
 const SKILL_FILE_NAME = "SKILL.md";
 
 export function useDownloadSkill() {
-	const { toast } = useToast();
 	const [isDownloading, setIsDownloading] = useState(false);
 
 	async function download() {
@@ -24,14 +23,11 @@ export function useDownloadSkill() {
 			anchor.remove();
 			URL.revokeObjectURL(url);
 
-			toast({
-				title: "Skill file downloaded",
+			toast.success("Skill file downloaded", {
 				description: "slidown-slides/SKILL.md",
 			});
 		} catch {
-			toast({
-				variant: "destructive",
-				title: "Download failed",
+			toast.error("Download failed", {
 				description: "Couldn't download the skill file. Try again.",
 			});
 		} finally {
