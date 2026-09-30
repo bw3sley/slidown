@@ -7,7 +7,7 @@ Only \`layout\`, \`header\`, \`footer\` and \`date\` frontmatter keys have any e
 
 Theme, accent color, font and dark/light mode are app-level settings. Do not emit frontmatter keys like \`theme:\` or \`font:\`.
 
-Only one image renders per slide. If more than one \`![]()\` line appears, the last one wins.
+Only \`bento\` renders more than one image: up to four \`![]()\` lines next to text, or up to five when the slide has no text, shown in order. Every other layout shows only the first image and ignores the rest.
 
 The renderer supports heading levels 1-3, single-level bullet lists, inline bold, inline italic and inline code. Do not generate tables, links, fenced code blocks, strikethrough, numbered lists, nested lists or heading levels 4-6.
 
@@ -25,7 +25,7 @@ Use \`full-bleed\` when the image fills the slide and text sits over it. It requ
 
 Use \`stack\` as the default: heading, body, image below if present.
 
-Use \`bento\` for a feature highlight with rounded panels beside a tall image. It requires an image.
+Use \`bento\` to show two to four related images as rounded tiles beside the text. With no text, it becomes an image grid of up to five images with the first one large on the left. It requires at least one image. For text next to a single image, use \`split\` instead.
 
 Use \`media-top\` for blog-style slides with image above text. It requires an image.
 
@@ -41,14 +41,14 @@ Supported content elements:
 Plain paragraphs for body copy.
 \`-\` for bullets.
 \`>\` for a quote.
-\`![Descriptive alt text](https://images.unsplash.com/photo-...)\` for one image.
+\`![Descriptive alt text](https://images.unsplash.com/photo-...)\` for an image, each on its own line.
 
 Keep decks readable:
 
 1. One idea per slide.
 2. Six lines maximum, counting bullets. Prefer three or four.
 3. Ten words per bullet maximum.
-4. One image per slide.
+4. One image per slide, except \`bento\`, which takes two to four (up to five with no text).
 5. Write bullets as statements, not labels.
 6. Avoid filler slides. No agenda unless the deck is over ten slides. No empty thank-you slide.
 7. Vary the rhythm. Never run more than three identical layouts back to back.

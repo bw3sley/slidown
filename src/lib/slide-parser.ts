@@ -26,7 +26,7 @@ export interface ParsedSlide {
 	source: string;
 	raw: string;
 	bodyMarkdown: string;
-	image: DeckImage | null;
+	images: DeckImage[];
 	line: number;
 }
 
@@ -67,21 +67,21 @@ export function parseFrontmatter(body: string): { meta: SlideMeta; rest: string 
 	return { meta, rest: body.slice(fm[0].length) };
 }
 
-export function extractSlideImage(body: string): {
-	image: DeckImage | null;
+export function extractSlideImages(body: string): {
+	images: DeckImage[];
 	bodyMarkdown: string;
 } {
-	let image: DeckImage | null = null;
+	const images: DeckImage[] = [];
 	const kept: string[] = [];
 	for (const line of body.split("\n")) {
 		const match = line.trim().match(IMAGE_LINE_RE);
 		if (match) {
-			image = { alt: match[1], src: match[2] };
+			images.push({ alt: match[1], src: match[2] });
 			continue;
 		}
 		kept.push(line);
 	}
-	return { image, bodyMarkdown: kept.join("\n") };
+	return { images, bodyMarkdown: kept.join("\n") };
 }
 
 export function parseDeck(markdown: string): ParsedSlide[] {
@@ -89,7 +89,7 @@ export function parseDeck(markdown: string): ParsedSlide[] {
 		const body = chunk.text.trim();
 		const { meta, rest } = parseFrontmatter(body);
 		const trimmedRest = rest.trim();
-		const { image, bodyMarkdown } = extractSlideImage(trimmedRest);
+		const { images, bodyMarkdown } = extractSlideImages(trimmedRest);
 		const lineOffset = markdown.slice(0, chunk.start).split("\n").length;
 		return {
 			index: i,
@@ -97,7 +97,7 @@ export function parseDeck(markdown: string): ParsedSlide[] {
 			source: body,
 			raw: trimmedRest,
 			bodyMarkdown,
-			image,
+			images,
 			line: lineOffset,
 		};
 	});
