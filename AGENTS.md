@@ -68,7 +68,7 @@ For UI, layout, styling, and visual refinement work, read and follow `@DESIGN.md
 - Production domain is `https://slidown.dev`. `og:image`, `twitter:image` and `canonical` use absolute URLs on it.
 - `public/og-image.png` (1200x630) is generated from `scripts/og/template.html` by `npm run og`. The PNG is committed. Rerun the script and commit it whenever branding, tagline or theme colors change.
 - `public/favicon.svg` is a copy of `src/assets/favicon.svg`. Keep them in sync, then rerun `npm run og` to refresh `apple-touch-icon.png`.
-- nginx caches `.png` for a year (immutable). If the OG image changes, rename the file or append a version query to the URLs in `index.html` so social platforms and browsers refetch it.
+- nginx caches only the hashed `/assets/` files for a year (immutable); unhashed public files like `og-image.png` are cached for one day, and `index.html` is always revalidated. Social platforms keep their own cache, so append a version query to the image URLs in `index.html` when the OG image changes.
 - `npm run og` needs a browser for Playwright: `npx playwright install chromium`, or it falls back to installed Edge/Chrome.
 
 ## Key Conventions
