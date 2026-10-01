@@ -4,7 +4,7 @@
 
 This document captures Slidown's current visual system, shared UI language, and layout rules. Slidown is a clean presentation-building workspace with a calm neutral base, elevated card surfaces, and a cool indigo brand accent. The interface should feel focused, precise, and modern rather than playful or ornamental.
 
-The system is built around semantic theme tokens defined in `src/styles.css`. Reusable components should consume those tokens through Tailwind utilities rather than hardcoded color values. The result should be a UI that can evolve without each component carrying its own visual logic.
+The system is built around semantic theme tokens defined in `src/index.css`. Reusable components should consume those tokens through Tailwind utilities rather than hardcoded color values. The result should be a UI that can evolve without each component carrying its own visual logic.
 
 Slidown currently supports two surface modes:
 1. **Light Mode** - soft gray canvas with white cards and indigo actions.
@@ -15,7 +15,7 @@ Slidown currently supports two surface modes:
 - Card-based surfaces with subtle borders instead of heavy chrome.
 - Indigo primary accent for action and focus.
 - Crisp typography with strong headline contrast.
-- Semantic token-driven styling through `src/styles.css`.
+- Semantic token-driven styling through `src/index.css`.
 
 ## Colors
 
@@ -98,7 +98,7 @@ Controls stay subtle. Floating surfaces are the one place Slidown uses real elev
 
 ## Motion
 
-Floating surfaces (dropdown menu, popover, select content) animate in with the `animate-pop-in` utility defined in `src/styles.css` (translateY 6px + scale 0.98 → resting position, 130ms ease-out) via `data-[state=open]:animate-pop-in`. They close instantly — no exit animation is defined, matching how they open.
+Floating surfaces (dropdown menu, popover, select content) animate in with the `animate-pop-in` utility defined in `src/index.css` (translateY 6px + scale 0.98 → resting position, 130ms ease-out) via `data-[state=open]:animate-pop-in`. They close instantly — no exit animation is defined, matching how they open.
 
 Controls (buttons, inputs, menu/select items) rely on Tailwind's default 150ms color transition for hover and focus states — no custom duration or easing needed.
 
@@ -133,7 +133,7 @@ Current primitive families include:
 ## Do's and Don'ts
 
 ### Do
-- Use token-backed utilities from `src/styles.css`.
+- Use token-backed utilities from `src/index.css`.
 - Preserve strong contrast between canvas, cards, and text.
 - Keep interactions crisp, compact, and clean.
 - Build reusable primitives before app-specific abstractions.
@@ -150,7 +150,7 @@ Current primitive families include:
 - **Desktop (> 1024px):** use wider containers, stronger section rhythm, and multi-column catalogs when useful.
 
 ## Iteration Guide
-1. Start from semantic tokens in `src/styles.css`.
+1. Start from semantic tokens in `src/index.css`.
 2. Reuse existing primitives before creating new visual patterns.
 3. Add Slidown-specific composed components above primitive layer, not inside it.
 4. Update this file when visual rules or layout direction materially change.
