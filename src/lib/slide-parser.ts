@@ -1,9 +1,33 @@
+import type { Root, Yaml } from "mdast";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkParse from "remark-parse";
+import { unified } from "unified";
+import { visit } from "unist-util-visit";
 import type { SlideLayoutKey } from "@/constants/slide-layouts";
 
 const SLIDE_SEPARATOR = /\n-{3,}\n/g;
-const FRONTMATTER_RE = /^\+\+\+\n([\s\S]*?)\n\+\+\+\n?/;
 const FRONTMATTER_LINE_RE = /^\s*([a-zA-Z_]+)\s*:\s*(.+?)\s*$/;
-const IMAGE_LINE_RE = /^!\[([^\]]*)\]\(([^)]+)\)$/;
+
+const processor = unified()
+	.use(remarkParse)
+	.use(remarkFrontmatter, [{ type: "yaml", fence: "+++" }]);
+
+function parse(src: string): Root {
+	return processor.parse(src) as Root;
+}
+
+function readFrontmatter(body: string): { entries: [string, string][]; rest: string } {
+	const first = parse(body).children[0];
+	if (first?.type !== "yaml") {return { entries: [], rest: body };}
+	const entries: [string, string][] = [];
+	for (const line of (first as Yaml).value.split("\n")) {
+		const kv = line.match(FRONTMATTER_LINE_RE);
+		if (kv) {
+			entries.push([kv[1], kv[2]]);
+		}
+	}
+	return { entries, rest: body.slice(first.position?.end.offset) };
+}
 
 export type SlideMetaValue = string | boolean;
 
@@ -39,12 +63,20 @@ export function splitSlides(markdown: string): SlideChunk[] {
 	const src = (markdown || "").replace(/\r\n/g, "\n");
 	const out: SlideChunk[] = [];
 	let lastIndex = 0;
+	const codeRanges: [number, number][] = [];
+	visit(parse(src), "code", (node) => {
+		codeRanges.push([node.position?.start.offset ?? 0, node.position?.end.offset ?? 0]);
+	});
 	SLIDE_SEPARATOR.lastIndex = 0;
 	for (
 		let match = SLIDE_SEPARATOR.exec(src);
 		match !== null;
 		match = SLIDE_SEPARATOR.exec(src)
 	) {
+		const at = match.index + 1;
+		if (codeRanges.some(([start, end]) => at > start && at < end)) {
+			continue;
+		}
 		out.push({ text: src.slice(lastIndex, match.index), start: lastIndex });
 		lastIndex = SLIDE_SEPARATOR.lastIndex;
 	}
@@ -54,34 +86,37 @@ export function splitSlides(markdown: string): SlideChunk[] {
 
 export function parseFrontmatter(body: string): { meta: SlideMeta; rest: string } {
 	const meta: SlideMeta = {};
-	const fm = body.match(FRONTMATTER_RE);
-	if (!fm) return { meta, rest: body };
-	for (const line of fm[1].split("\n")) {
-		const kv = line.match(FRONTMATTER_LINE_RE);
-		if (!kv) continue;
-		let value: SlideMetaValue = kv[2].trim().replace(/^["']|["']$/g, "");
-		if (value === "true") value = true;
-		else if (value === "false") value = false;
-		meta[kv[1].trim()] = value;
+	const { entries, rest } = readFrontmatter(body);
+	for (const [key, raw] of entries) {
+		const value = raw.trim().replace(/^["']|["']$/g, "");
+		meta[key] = value === "true" ? true : value === "false" ? false : value;
 	}
-	return { meta, rest: body.slice(fm[0].length) };
+	return { meta, rest };
 }
 
 export function extractSlideImages(body: string): {
 	images: DeckImage[];
 	bodyMarkdown: string;
 } {
+	const lines = body.split("\n");
 	const images: DeckImage[] = [];
-	const kept: string[] = [];
-	for (const line of body.split("\n")) {
-		const match = line.trim().match(IMAGE_LINE_RE);
-		if (match) {
-			images.push({ alt: match[1], src: match[2] });
-			continue;
+	const imageLines = new Set<number>();
+	visit(parse(body), "image", (node) => {
+		const { start, end } = node.position ?? {};
+		if (!start || !end || start.line !== end.line) {
+			return;
 		}
-		kept.push(line);
-	}
-	return { images, bodyMarkdown: kept.join("\n") };
+		const line = lines[start.line - 1].trim();
+		if (line !== body.slice(start.offset, end.offset)) {
+			return;
+		}
+		images.push({ alt: node.alt ?? "", src: node.url });
+		imageLines.add(start.line - 1);
+	});
+	return {
+		images,
+		bodyMarkdown: lines.filter((_, i) => !imageLines.has(i)).join("\n"),
+	};
 }
 
 export function parseDeck(markdown: string): ParsedSlide[] {
@@ -112,26 +147,19 @@ export function setSlideLayout(
 	layoutKey: SlideLayoutKey,
 ): string {
 	const body = (sourceText || "").trim();
-	const fm = body.match(FRONTMATTER_RE);
-	const meta: Record<string, string> = {};
-	const order: string[] = [];
-	let rest = body;
-	if (fm) {
-		for (const line of fm[1].split("\n")) {
-			const kv = line.match(FRONTMATTER_LINE_RE);
-			if (!kv) continue;
-			meta[kv[1].trim()] = kv[2].trim();
-			order.push(kv[1].trim());
-		}
-		rest = body.slice(fm[0].length);
+	const { entries, rest } = readFrontmatter(body);
+	const others = entries.filter(([key]) => key !== "layout");
+	const layoutAt = entries.findIndex(([key]) => key === "layout");
+	const next: [string, string][] =
+		!layoutKey || layoutKey === "stack"
+			? others
+			: layoutAt === -1
+				? [["layout", layoutKey], ...others]
+				: entries.map(([key, value]) => (key === "layout" ? [key, layoutKey] : [key, value]));
+	if (!next.length) {
+		return rest.trim();
 	}
-	if (layoutKey && layoutKey !== "stack") meta.layout = layoutKey;
-	else delete meta.layout;
-	if (!order.includes("layout") && meta.layout) order.unshift("layout");
-	const keys = order.filter((k) => k in meta);
-	if (!keys.length) return rest.trim();
-	const fmBlock = `+++\n${keys.map((k) => `${k}: ${meta[k]}`).join("\n")}\n+++`;
-	return `${fmBlock}\n${rest.trim()}`;
+	return `+++\n${next.map(([key, value]) => `${key}: ${value}`).join("\n")}\n+++\n${rest.trim()}`;
 }
 
 export function excerptFor(raw: string): string {
