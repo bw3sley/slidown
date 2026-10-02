@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import type { AiProviderId } from "@/constants/ai-providers";
-import { getBoardStorageKey } from "@/lib/board-storage";
+import { createBoardStorage, getBoardStorageKey } from "@/lib/board-storage";
 import { callModel } from "@/lib/ai-client";
 import { SLIDE_CRITIQUE_SYSTEM_PROMPT } from "@/prompts/slide-critique";
 import {
@@ -124,7 +124,8 @@ export const useAiStore = create<AiState>()(
 			},
 		})),
 		{
-			name: `${getBoardStorageKey()}:ai`,
+			name: getBoardStorageKey(undefined, "ai"),
+			storage: createJSONStorage(() => createBoardStorage("ai")),
 			partialize: (state) => ({ provider: state.provider, apiKeys: state.apiKeys }),
 		},
 	),

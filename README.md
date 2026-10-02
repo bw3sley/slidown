@@ -16,6 +16,10 @@ The goal is to let developers, and eventually broader users too, create presenta
 - Customize themes, accents, and typography without heavy design work
 - Make presentation creation faster for developers and other users
 
+## Boards
+
+Each URL path is a separate board. Open `/` or type a path such as `/1` or `/my-board` in the address bar to create or reopen one. New boards start empty, with an option to insert the starter deck. Boards save in this browser's localStorage as you edit; opening the same URL on another device does not transfer the board.
+
 ## Tech
 
 - HTML

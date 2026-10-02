@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import { create } from "zustand";
-import { createJSONStorage, persist, type StateStorage } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import {
@@ -19,9 +19,7 @@ import type { SlideLayoutKey } from "@/constants/slide-layouts";
 
 import { DEFAULT_MD } from "@/constants/starter-deck";
 
-import { debounce } from "@/hooks/use-debounce";
-
-import { getBoardStorageKey } from "@/lib/board-storage";
+import { createBoardStorage, getBoardStorageKey } from "@/lib/board-storage";
 
 import {
 	joinSlides,
@@ -53,24 +51,21 @@ function clampActiveIndex(index: number, slideCount: number): number {
 	return Math.max(0, Math.min(index, slideCount - 1));
 }
 
-const debouncedSetItem = debounce((name: string, value: string) => {
-	localStorage.setItem(name, value);
-}, 350);
-
-const debouncedLocalStorage: StateStorage = {
-	getItem: (name) => localStorage.getItem(name),
-	setItem: (name, value) => debouncedSetItem(name, value),
-	removeItem: (name) => localStorage.removeItem(name),
+const initialDeckData: Pick<
+	DeckState,
+	"markdown" | "deckThemeId" | "customAccent" | "deckFontId"
+> = {
+	markdown: "",
+	deckThemeId: "paper",
+	customAccent: null,
+	deckFontId: DECK_FONT_ORDER[0],
 };
 
 export const useDeckStore = create<DeckState>()(
 	persist(
 		immer((set, get) => ({
-			markdown: DEFAULT_MD,
+			...initialDeckData,
 			activeSlideIndex: 0,
-			deckThemeId: "paper",
-			customAccent: null,
-			deckFontId: DECK_FONT_ORDER[0],
 
 			setMarkdown: (next) =>
 				set((state) => {
@@ -153,7 +148,12 @@ export const useDeckStore = create<DeckState>()(
 		})),
 		{
 			name: getBoardStorageKey(),
-			storage: createJSONStorage(() => debouncedLocalStorage),
+			storage: createJSONStorage(() =>
+				createBoardStorage(
+					"deck",
+					JSON.stringify({ state: initialDeckData, version: 0 }),
+				),
+			),
 			partialize: (state) => ({
 				markdown: state.markdown,
 				deckThemeId: state.deckThemeId,
