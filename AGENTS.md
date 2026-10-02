@@ -22,6 +22,7 @@ npm run og            # regenerate public/og-image.png and apple-touch-icon.png
 - **State** - Zustand (with Immer) in `src/stores/`
 - **Forms** - React Hook Form + Zod
 - **Editor / rendering** - Monaco editor, react-markdown
+- **Dates** - dayjs, configured in `src/lib/dayjs.ts`
 - **Icons** - Lucide React
 - **Notifications** - Sonner
 - **Linting** - oxlint
@@ -44,7 +45,7 @@ src/
   constants/          # themes, fonts, layouts, AI providers, starter deck
   hooks/              # shared hooks
   http/               # AI provider clients (Claude, Gemini, OpenAI) and errors
-  lib/                # utilities like `cn()`, slide parser/layout, AI client
+  lib/                # utilities like `cn()`, `dayjs`, slide parser/layout, AI client
   prompts/            # AI prompt templates
   skills/             # bundled skill files
   stores/             # Zustand stores

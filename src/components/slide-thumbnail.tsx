@@ -39,7 +39,9 @@ export function SlideThumbnail({
 	function handleDrop(e: DragEvent<HTMLDivElement>) {
 		e.preventDefault();
 		const from = Number(e.dataTransfer.getData("text/plain"));
-		if (!Number.isNaN(from) && from !== index) reorderSlide(from, index);
+		if (!Number.isNaN(from) && from !== index) {
+			reorderSlide(from, index);
+		}
 	}
 
 	function handleDelete(e: MouseEvent) {
@@ -97,7 +99,7 @@ export function SlideThumbnail({
 				<span className="text-xxs font-bold opacity-50">{index + 1}</span>
 				{layoutKey !== "stack" ? (
 					<span
-						className="overflow-hidden text-xxs font-bold tracking-[.05em] text-ellipsis whitespace-nowrap uppercase"
+						className="overflow-hidden text-xxs font-bold tracking-wider text-ellipsis whitespace-nowrap uppercase"
 						style={{ color: theme.accent }}
 					>
 						{LAYOUT_LABELS[layoutKey]}

@@ -1,9 +1,6 @@
 import { FilePlus } from "lucide-react";
-import { createContext, useContext } from "react";
-import ReactMarkdown from "react-markdown";
-import type { Components } from "react-markdown";
-
 import { AiProvider } from "@/components/ai-provider";
+import { SlideMarkdown } from "@/components/slide-markdown";
 import { TemplatePicker } from "@/components/template-picker";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +11,13 @@ import {
 	EmptyStateTitle,
 } from "@/components/ui/empty-state";
 import { DECK_FONT_CLASS } from "@/constants/deck-fonts";
-import { getSlideTextStyles, layoutFor } from "@/lib/slide-layout";
+import { dayjs } from "@/lib/dayjs";
+import {
+	layoutFor,
+	STAGE_BLEED_CLASS,
+	STAGE_SCRIM_CLASS,
+	STAGE_SPACING,
+} from "@/lib/slide-layout";
 import { cn } from "@/lib/utils";
 import {
 	useActiveSlide,
@@ -23,62 +26,7 @@ import {
 	useSlides,
 } from "@/stores/deck-store";
 
-const ListDepthContext = createContext(0);
-
-type TagProps<Tag extends keyof React.JSX.IntrinsicElements> =
-	React.ComponentPropsWithoutRef<Tag> & { node?: unknown };
-
-function buildMarkdownComponents(
-	textStyles: ReturnType<typeof getSlideTextStyles>,
-): Components {
-	function MarkdownUl({ node: _node, children, ...props }: TagProps<"ul">) {
-		const depth = useContext(ListDepthContext);
-
-		return (
-			<ListDepthContext.Provider value={depth + 1}>
-				<ul style={depth === 0 ? textStyles.ul : textStyles.nestedUl} {...props}>
-					{children}
-				</ul>
-			</ListDepthContext.Provider>
-		);
-	}
-
-	function MarkdownLi({ node: _node, children, ...props }: TagProps<"li">) {
-		const depth = useContext(ListDepthContext);
-
-		const nested = depth > 1;
-
-		return (
-			<li style={textStyles.li} {...props}>
-				<span style={nested ? textStyles.nestedLiMarker : textStyles.liMarker}>-</span>
-				<span>{children}</span>
-			</li>
-		);
-	}
-
-	return {
-		h1: ({ node: _node, ...props }) => <h1 style={textStyles.h1} {...props} />,
-		h2: ({ node: _node, ...props }) => <h2 style={textStyles.h2} {...props} />,
-		h3: ({ node: _node, ...props }) => <h3 style={textStyles.h3} {...props} />,
-		p: ({ node: _node, ...props }) => <p style={textStyles.p} {...props} />,
-		ul: MarkdownUl,
-		li: MarkdownLi,
-		blockquote: ({ node: _node, ...props }) => (
-			<blockquote style={textStyles.blockquote} {...props} />
-		),
-		code: ({ node: _node, ...props }) => <code style={textStyles.code} {...props} />,
-	};
-}
-
-function todayFormatted(): string {
-	return new Date().toLocaleDateString("en-US", {
-		month: "short",
-		day: "numeric",
-		year: "numeric",
-	});
-}
-
-function Preview() {
+export function Preview() {
 	const slides = useSlides();
 	const activeSlide = useActiveSlide();
 	const theme = useResolvedDeckTheme();
@@ -107,14 +55,8 @@ function Preview() {
 
 	const leadImage = activeSlide.images[0] ?? null;
 	const geometry = layoutFor(activeSlide.meta, activeSlide.images, {
-		accentColor: theme.accent,
 		hasBody: activeSlide.bodyMarkdown.trim().length > 0,
 	});
-	const textStyles = getSlideTextStyles(theme.accent, {
-		columns: geometry.key === "columns",
-	});
-	const components = buildMarkdownComponents(textStyles);
-
 	const showFooterBar = Boolean(activeSlide.meta.footer || activeSlide.meta.date);
 
 	return (
@@ -126,33 +68,39 @@ function Preview() {
 					className={cn(
 						DECK_FONT_CLASS[deckFontId],
 						"absolute inset-0 box-border flex flex-col overflow-hidden rounded-[1.09375cqw]",
+						geometry.pad,
 					)}
 					style={{
 						background: theme.bg,
 						color: theme.ink,
 						boxShadow: "0 1.5625cqw 3.90625cqw rgba(0,0,0,.18)",
-						padding: geometry.pad,
-					}}
+						"--spacing": STAGE_SPACING,
+						"--accent": theme.accent,
+					} as React.CSSProperties}
 				>
-					<div style={geometry.rowStyle}>
+					<div className={geometry.rowClass} style={geometry.rowStyle}>
 						{geometry.showBleed && leadImage ? (
 							<>
-								<div style={geometry.bleedWrapStyle}>
+								<div className={STAGE_BLEED_CLASS}>
 									<img
 										src={leadImage.src}
 										alt={leadImage.alt}
 										className="h-full w-full object-cover"
 									/>
 								</div>
-								<div style={geometry.scrimStyle} />
+								<div className={STAGE_SCRIM_CLASS} />
 							</>
 						) : null}
 
-						{geometry.imageSlots.map((slotStyle, index) => {
+						{geometry.imageSlots.map((slot, index) => {
 							const slideImage = activeSlide.images[index];
 
 							return (
-								<div key={`${index}:${slideImage.src}`} style={slotStyle}>
+								<div
+									key={`${index}:${slideImage.src}`}
+									className={slot.className}
+									style={slot.style}
+								>
 									<img
 										src={slideImage.src}
 										alt={slideImage.alt}
@@ -162,35 +110,22 @@ function Preview() {
 							);
 						})}
 
-						<div style={geometry.contentColStyle}>
+						<div className={geometry.contentColClass}>
 							{activeSlide.meta.header ? (
-								<div style={geometry.headerStyle}>{activeSlide.meta.header}</div>
+								<div className={geometry.headerClass}>{activeSlide.meta.header}</div>
 							) : null}
 
-							<div style={geometry.bodyStyle}>
-								<ReactMarkdown
-									allowedElements={[
-										"h1",
-										"h2",
-										"h3",
-										"p",
-										"ul",
-										"li",
-										"blockquote",
-										"strong",
-										"em",
-										"code",
-									]}
-									components={components}
-								>
-									{activeSlide.bodyMarkdown}
-								</ReactMarkdown>
+							<div className={geometry.bodyClass}>
+								<SlideMarkdown
+									markdown={activeSlide.bodyMarkdown}
+									columns={geometry.key === "columns"}
+								/>
 							</div>
 
 							{showFooterBar ? (
-								<div style={geometry.footerStyle}>
+								<div className={geometry.footerClass}>
 									<span>{activeSlide.meta.footer}</span>
-									{activeSlide.meta.date ? <span>{todayFormatted()}</span> : null}
+									{activeSlide.meta.date ? <span>{dayjs().format("MMM D, YYYY")}</span> : null}
 								</div>
 							) : null}
 						</div>
@@ -202,5 +137,3 @@ function Preview() {
 		</div>
 	);
 }
-
-export { Preview };
