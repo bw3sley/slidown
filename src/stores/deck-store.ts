@@ -19,7 +19,7 @@ import type { SlideLayoutKey } from "@/constants/slide-layouts";
 
 import { DEFAULT_MD } from "@/constants/starter-deck";
 
-import { createBoardStorage, getBoardStorageKey } from "@/lib/board-storage";
+import { createBoardStorage, getBoardStorageKey } from "@/stores/board-storage";
 
 import {
 	joinSlides,

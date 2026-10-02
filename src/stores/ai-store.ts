@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import type { AiProviderId } from "@/constants/ai-providers";
-import { createBoardStorage, getBoardStorageKey } from "@/lib/board-storage";
+import { createBoardStorage, getBoardStorageKey } from "@/stores/board-storage";
 import { callModel } from "@/lib/ai-client";
 import { SLIDE_CRITIQUE_SYSTEM_PROMPT } from "@/prompts/slide-critique";
 import {

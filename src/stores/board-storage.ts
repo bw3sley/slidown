@@ -6,7 +6,9 @@ export const DECK_STORAGE_VERSION = 2;
 type BoardStorageKind = "deck" | "ai";
 
 export function getBoardId(): string {
-	if (typeof window === "undefined") return "/";
+	if (typeof window === "undefined") {
+		return "/";
+	}
 	return window.location.pathname.replace(/\/+$/, "") || "/";
 }
 
@@ -18,8 +20,9 @@ export function getBoardStorageKey(
 }
 
 function getLegacyBoardStorageKey(boardId: string, kind: BoardStorageKind): string | null {
-	// The old key for /default was the same as /, so that data belongs to /.
-	if (boardId === "/default") return null;
+	if (boardId === "/default") {
+		return null;
+	}
 	const legacyId = boardId === "/" ? "default" : boardId.replace(/^\/+|\/+$/g, "");
 	const key = `slidown-v1:${legacyId}`;
 	return kind === "ai" ? `${key}:ai` : key;
@@ -32,7 +35,9 @@ function isLegacyValueForKind(value: string, kind: BoardStorageKind): boolean {
 			return false;
 		}
 		const state = parsed.state;
-		if (typeof state !== "object" || state === null) return false;
+		if (typeof state !== "object" || state === null) {
+			return false;
+		}
 		return kind === "deck"
 			? "markdown" in state && typeof state.markdown === "string"
 			: "apiKeys" in state && typeof state.apiKeys === "object";
@@ -58,13 +63,17 @@ export function createBoardStorage(
 		getItem(name) {
 			try {
 				const current = localStorage.getItem(name);
-				if (current !== null) return current;
+				if (current !== null) {
+					return current;
+				}
 
 				const legacy = legacyKey ? localStorage.getItem(legacyKey) : null;
 				const value = legacy && isLegacyValueForKind(legacy, kind)
 					? legacy
 					: initialValue ?? null;
-				if (value !== null) localStorage.setItem(name, value);
+				if (value !== null) {
+					localStorage.setItem(name, value);
+				}
 				return value;
 			} catch {
 				reportStorageError();
