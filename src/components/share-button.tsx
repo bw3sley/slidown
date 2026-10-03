@@ -18,8 +18,6 @@ import {
 import { useDownloadSkill } from "@/hooks/use-download-skill";
 import { useUiStore } from "@/stores/ui-store";
 
-const soonBadgeClassName = "font-bold uppercase tracking-wide";
-
 export function ShareButton() {
 	const open = useUiStore((s) => s.openPanel === "share");
 
@@ -46,7 +44,7 @@ export function ShareButton() {
 				<DropdownMenuItem disabled>
 					<Link2 className="size-3.5" />
 					<span className="flex-1">Copy link</span>
-					<Badge variant="muted" size="sm" className={soonBadgeClassName}>
+					<Badge variant="muted" size="sm" className="font-bold uppercase tracking-wide">
 						Soon
 					</Badge>
 				</DropdownMenuItem>
@@ -63,7 +61,7 @@ export function ShareButton() {
 
 					<span className="flex-1">Export as PPTX</span>
 
-					<Badge variant="muted" size="sm" className={soonBadgeClassName}>
+					<Badge variant="muted" size="sm" className="font-bold uppercase tracking-wide">
 						Soon
 					</Badge>
 				</DropdownMenuItem>

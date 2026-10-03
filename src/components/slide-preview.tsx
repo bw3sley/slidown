@@ -1,21 +1,6 @@
-import { Plus } from "lucide-react";
-
+import { AddSlideTile } from "@/components/add-slide-tile";
 import { SlideThumbnail } from "@/components/slide-thumbnail";
 import { useDeckStore, useSlides } from "@/stores/deck-store";
-
-function AddSlideTile() {
-	const addSlide = useDeckStore((s) => s.addSlide);
-	return (
-		<button
-			type="button"
-			onClick={() => addSlide()}
-			title="Add slide"
-			className="flex h-17 w-10.5 shrink-0 items-center justify-center rounded-[9px] border-[1.5px] border-dashed border-border text-muted-foreground transition-colors hover:bg-accent"
-		>
-			<Plus className="size-4.5" />
-		</button>
-	);
-}
 
 export function SlidePreview() {
 	const slides = useSlides();

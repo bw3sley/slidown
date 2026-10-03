@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -94,7 +93,9 @@ export const useDeckStore = create<DeckState>()(
 
 			deleteSlide: (i) => {
 				const sources = parseDeck(get().markdown).map((s) => s.source);
-				if (sources.length <= 1) return;
+				if (sources.length <= 1) {
+					return;
+				}
 				sources.splice(i, 1);
 				set((state) => {
 					state.markdown = joinSlides(sources);
@@ -105,7 +106,9 @@ export const useDeckStore = create<DeckState>()(
 			reorderSlide: (from, to) => {
 				const sources = parseDeck(get().markdown).map((s) => s.source);
 				const [moved] = sources.splice(from, 1);
-				if (moved === undefined) return;
+				if (moved === undefined) {
+					return;
+				}
 				sources.splice(to, 0, moved);
 				set((state) => {
 					state.markdown = joinSlides(sources);
@@ -117,7 +120,9 @@ export const useDeckStore = create<DeckState>()(
 				const slides = parseDeck(get().markdown);
 				const idx = get().activeSlideIndex;
 				const active = slides[idx];
-				if (!active) return;
+				if (!active) {
+					return;
+				}
 				const sources = slides.map((s) => s.source);
 				sources[idx] = setSlideLayoutSource(active.source, key);
 				set((state) => {
@@ -166,7 +171,7 @@ export const useDeckStore = create<DeckState>()(
 
 export function useSlides(): ParsedSlide[] {
 	const markdown = useDeckStore((s) => s.markdown);
-	return useMemo(() => parseDeck(markdown), [markdown]);
+	return parseDeck(markdown);
 }
 
 export function useActiveSlide(): ParsedSlide | undefined {
@@ -178,8 +183,5 @@ export function useActiveSlide(): ParsedSlide | undefined {
 export function useResolvedDeckTheme(): DeckTheme {
 	const deckThemeId = useDeckStore((s) => s.deckThemeId);
 	const customAccent = useDeckStore((s) => s.customAccent);
-	return useMemo(
-		() => resolveDeckTheme(deckThemeId, customAccent),
-		[deckThemeId, customAccent],
-	);
+	return resolveDeckTheme(deckThemeId, customAccent);
 }

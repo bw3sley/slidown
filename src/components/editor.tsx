@@ -15,9 +15,13 @@ export function Editor() {
 	const activeLine = useActiveSlide()?.line;
 
 	useEffect(() => {
-		if (activeLine === undefined) return;
+		if (activeLine === undefined) {
+			return;
+		}
 		const editorInstance = editorRef.current;
-		if (!editorInstance) return;
+		if (!editorInstance) {
+			return;
+		}
 		editorInstance.revealLineInCenter(activeLine);
 		editorInstance.setPosition({ lineNumber: activeLine, column: 1 });
 	}, [activeLine]);

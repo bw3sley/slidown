@@ -15,22 +15,32 @@ export function debounce<Args extends unknown[]>(
 
 	const debounced = ((...args: Args) => {
 		lastArgs = args;
-		if (timer) clearTimeout(timer);
+		if (timer) {
+			clearTimeout(timer);
+		}
 		timer = setTimeout(() => {
 			timer = null;
-			if (lastArgs) fn(...lastArgs);
+			if (lastArgs) {
+				fn(...lastArgs);
+			}
 		}, waitMs);
 	}) as Debounced<Args>;
 
 	debounced.cancel = () => {
-		if (timer) clearTimeout(timer);
+		if (timer) {
+			clearTimeout(timer);
+		}
 		timer = null;
 	};
 
 	debounced.flush = () => {
-		if (timer) clearTimeout(timer);
+		if (timer) {
+			clearTimeout(timer);
+		}
 		timer = null;
-		if (lastArgs) fn(...lastArgs);
+		if (lastArgs) {
+			fn(...lastArgs);
+		}
 	};
 
 	return debounced;
@@ -46,6 +56,8 @@ export function useDebouncedCallback<Args extends unknown[]>(
 	});
 
 	const debounced = useMemo(
+		// fnRef is only read lazily when the debounced call fires, not during render
+		// oxlint-disable-next-line react/refs
 		() => debounce<Args>((...args) => fnRef.current(...args), waitMs),
 		[waitMs],
 	);
