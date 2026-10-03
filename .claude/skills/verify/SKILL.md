@@ -14,14 +14,19 @@ description: Run slidown in a browser, load a deck, and measure the slide previe
 
 ## Load a deck
 
-The deck persists in `localStorage["slidown-v1:default"]` as `{"state":{"markdown": "..."},"version":0}`. Other keys (`deckThemeId`, `deckFontId`, ...) fall back to defaults when omitted.
+The deck persists in `localStorage["slidown-v2:deck:%2F"]` (key is `slidown-v2:deck:<encoded board path>`) as `{"state":{"markdown": "..."},"version":0}`. The old `slidown-v1:default` key is only a read-once fallback and is ignored once the v2 key exists. Other keys (`deckThemeId`, `deckFontId`, ...) fall back to defaults when omitted. Open the app once first so the v2 key exists, then edit it:
 
 ```js
-const md = (await (await fetch('/example.md')).text()).replace(/\r\n/g, '\n');
-localStorage.setItem('slidown-v1:default', JSON.stringify({ state: { markdown: md }, version: 0 }));
+const md = (await import('/src/constants/starter-deck.ts')).DEFAULT_MD.replace(/\r\n/g, '\n');
+const key = 'slidown-v2:deck:%2F';
+const cur = JSON.parse(localStorage.getItem(key));
+cur.state.markdown = md;
+localStorage.setItem(key, JSON.stringify(cur));
 location.reload();
 ```
 
+- Use real photos for image slides, e.g. `![Photo](https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80)`, and check `stage.querySelectorAll('img')` is non-empty.
+- Test a light slide (heading plus one line) and a text-heavy one.
 - Starter deck: `(await import('/src/constants/starter-deck.ts')).DEFAULT_MD`.
 - Font probe: set `state.deckFontId` to `'mono'`. It's the widest font and the harshest fit test.
 
