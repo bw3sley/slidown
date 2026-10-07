@@ -138,6 +138,21 @@ export function parseDeck(markdown: string): ParsedSlide[] {
 	});
 }
 
+export type EmptyKind = "deck" | "slide";
+
+export function getEmptyKind(
+	markdown: string,
+	slide: ParsedSlide | undefined,
+): EmptyKind | null {
+	if (!markdown.trim()) {
+		return "deck";
+	}
+	if (!slide || (!slide.raw.trim() && slide.images.length === 0)) {
+		return "slide";
+	}
+	return null;
+}
+
 export function joinSlides(rawTexts: string[]): string {
 	return rawTexts.map((t) => t.trim()).join("\n---\n");
 }

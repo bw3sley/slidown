@@ -54,7 +54,7 @@ const initialDeckData: Pick<
 	DeckState,
 	"markdown" | "deckThemeId" | "customAccent" | "deckFontId"
 > = {
-	markdown: "",
+	markdown: DEFAULT_MD,
 	deckThemeId: "paper",
 	customAccent: null,
 	deckFontId: DECK_FONT_ORDER[0],

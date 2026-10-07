@@ -130,6 +130,9 @@ Current primitive families include:
 - Prefer Radix UI for overlays and accessibility-sensitive controls.
 - Keep primitives generic so feature-level components can compose them later.
 
+### Empty State
+When the deck is blank, or the active slide has no body and no image, the preview shows an empty state inside the themed slide stage instead of slide content. It takes its colors from the deck theme (`currentColor`), not the app tokens. The slide layout picker is hidden while it shows, because there is nothing to lay out. First-time visitors never see it: a new board is seeded with the starter deck.
+
 ## Do's and Don'ts
 
 ### Do

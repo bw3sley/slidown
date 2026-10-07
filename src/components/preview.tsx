@@ -1,15 +1,7 @@
-import { FilePlus } from "lucide-react";
 import { AiProvider } from "@/components/ai-provider";
+import { EmptySlide } from "@/components/empty-slide";
 import { SlideMarkdown } from "@/components/slide-markdown";
 import { TemplatePicker } from "@/components/template-picker";
-import { Button } from "@/components/ui/button";
-import {
-	EmptyState,
-	EmptyStateAction,
-	EmptyStateDescription,
-	EmptyStateIcon,
-	EmptyStateTitle,
-} from "@/components/ui/empty-state";
 import { DECK_FONT_CLASS } from "@/constants/deck-fonts";
 import { dayjs } from "@/lib/dayjs";
 import {
@@ -18,46 +10,33 @@ import {
 	STAGE_SCRIM_CLASS,
 	STAGE_SPACING,
 } from "@/lib/slide-layout";
+import { getEmptyKind } from "@/lib/slide-parser";
 import { cn } from "@/lib/utils";
 import {
 	useActiveSlide,
 	useDeckStore,
 	useResolvedDeckTheme,
-	useSlides,
 } from "@/stores/deck-store";
 
 export function Preview() {
-	const slides = useSlides();
 	const activeSlide = useActiveSlide();
 	const theme = useResolvedDeckTheme();
 	const deckFontId = useDeckStore((s) => s.deckFontId);
 
-	if (slides.length === 0 || !activeSlide) {
-		return (
-			<div className="relative flex min-h-0 min-w-0 flex-1 items-center justify-center overflow-hidden bg-background p-8">
-				<EmptyState>
-					<EmptyStateIcon>
-						<FilePlus />
-					</EmptyStateIcon>
-					<EmptyStateTitle>Nothing to show yet</EmptyStateTitle>
-					<EmptyStateDescription>
-						Start typing markdown on the left. Slides split on a line of ---.
-					</EmptyStateDescription>
-					<EmptyStateAction>
-						<Button onClick={() => useDeckStore.getState().insertStarterDeck()}>
-							Insert starter deck
-						</Button>
-					</EmptyStateAction>
-				</EmptyState>
-			</div>
-		);
+	const markdown = useDeckStore((s) => s.markdown);
+	const emptyKind = getEmptyKind(markdown, activeSlide);
+
+	if (emptyKind || !activeSlide) {
+		return <EmptySlide kind={emptyKind} />;
 	}
 
 	const leadImage = activeSlide.images[0] ?? null;
 	const geometry = layoutFor(activeSlide.meta, activeSlide.images, {
 		hasBody: activeSlide.bodyMarkdown.trim().length > 0,
 	});
-	const showFooterBar = Boolean(activeSlide.meta.footer || activeSlide.meta.date);
+	const showFooterBar = Boolean(
+		activeSlide.meta.footer || activeSlide.meta.date,
+	);
 
 	return (
 		<div className="@container-size relative flex min-h-0 min-w-0 flex-1 items-center justify-center overflow-hidden bg-background p-8">
@@ -70,13 +49,15 @@ export function Preview() {
 						"absolute inset-0 box-border flex flex-col overflow-hidden rounded-[1.09375cqw]",
 						geometry.pad,
 					)}
-					style={{
-						background: theme.bg,
-						color: theme.ink,
-						boxShadow: "0 1.5625cqw 3.90625cqw rgba(0,0,0,.18)",
-						"--spacing": STAGE_SPACING,
-						"--accent": theme.accent,
-					} as React.CSSProperties}
+					style={
+						{
+							background: theme.bg,
+							color: theme.ink,
+							boxShadow: "0 1.5625cqw 3.90625cqw rgba(0,0,0,.18)",
+							"--spacing": STAGE_SPACING,
+							"--accent": theme.accent,
+						} as React.CSSProperties
+					}
 				>
 					<div className={geometry.rowClass} style={geometry.rowStyle}>
 						{geometry.showBleed && leadImage ? (
@@ -112,7 +93,9 @@ export function Preview() {
 
 						<div className={geometry.contentColClass}>
 							{activeSlide.meta.header ? (
-								<div className={geometry.headerClass}>{activeSlide.meta.header}</div>
+								<div className={geometry.headerClass}>
+									{activeSlide.meta.header}
+								</div>
 							) : null}
 
 							<div className={geometry.bodyClass}>
@@ -125,7 +108,9 @@ export function Preview() {
 							{showFooterBar ? (
 								<div className={geometry.footerClass}>
 									<span>{activeSlide.meta.footer}</span>
-									{activeSlide.meta.date ? <span>{dayjs().format("MMM D, YYYY")}</span> : null}
+									{activeSlide.meta.date ? (
+										<span>{dayjs().format("MMM D, YYYY")}</span>
+									) : null}
 								</div>
 							) : null}
 						</div>
