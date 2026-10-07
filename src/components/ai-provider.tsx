@@ -46,7 +46,7 @@ export function AiProvider() {
 					size="icon"
 					className="absolute bottom-6 right-6 size-13 rounded-full shadow-[0_10px_26px_rgba(0,0,0,.22)] transition-transform hover:scale-105"
 				>
-					<Sparkles />
+					<Sparkles className="fill-current" />
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent
@@ -100,7 +100,7 @@ export function AiProvider() {
 					</InputRoot>
 
 					<Textarea
-						placeholder="Describe the deck you want — or leave blank and press Evaluate to critique the current one"
+						placeholder="Describe the deck you want or leave blank and press Evaluate to critique the current one"
 						value={prompt}
 						onChange={(event) => setPrompt(event.target.value)}
 					/>
@@ -113,6 +113,7 @@ export function AiProvider() {
 						>
 							{loading ? "Thinking…" : "Generate deck"}
 						</Button>
+
 						<Button
 							className="flex-1"
 							variant="outline"
