@@ -1,17 +1,16 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-
 import type { AiProviderId } from "@/constants/ai-providers";
-import { createBoardStorage, getBoardStorageKey } from "@/stores/board-storage";
+import { AiClientError } from "@/http/errors/ai-error";
 import { callModel } from "@/lib/ai-client";
 import { SLIDE_CRITIQUE_SYSTEM_PROMPT } from "@/prompts/slide-critique";
 import {
 	EMPTY_DECK_REQUEST_PROMPT,
 	SLIDE_GENERATION_SYSTEM_PROMPT,
 } from "@/prompts/slide-generation";
+import { createBoardStorage, getBoardStorageKey } from "@/stores/board-storage";
 import { useDeckStore } from "@/stores/deck-store";
-import { AiClientError } from "@/http/errors/ai-error";
 
 interface AiState {
 	provider: AiProviderId;
@@ -74,9 +73,7 @@ export const useAiStore = create<AiState>()(
 					set((state) => {
 						state.loading = false;
 					});
-				}
-
-				catch (err) {
+				} catch (err) {
 					set((state) => {
 						state.loading = false;
 						state.error =
@@ -110,9 +107,7 @@ export const useAiStore = create<AiState>()(
 						state.loading = false;
 						state.feedback = text.trim();
 					});
-				}
-
-				catch (err) {
+				} catch (err) {
 					set((state) => {
 						state.loading = false;
 						state.error =
@@ -126,7 +121,10 @@ export const useAiStore = create<AiState>()(
 		{
 			name: getBoardStorageKey(undefined, "ai"),
 			storage: createJSONStorage(() => createBoardStorage("ai")),
-			partialize: (state) => ({ provider: state.provider, apiKeys: state.apiKeys }),
+			partialize: (state) => ({
+				provider: state.provider,
+				apiKeys: state.apiKeys,
+			}),
 		},
 	),
 );

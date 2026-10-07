@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { toast } from "sonner";
-
 import skillMarkdown from "@/skills/slidown-slides/SKILL.md?raw";
 
 const SKILL_FILE_NAME = "SKILL.md";

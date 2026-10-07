@@ -29,7 +29,8 @@ type InputDescriptionProps = HTMLAttributes<HTMLParagraphElement>;
 type InputErrorProps = HTMLAttributes<HTMLParagraphElement>;
 
 interface InputControlProps
-	extends Omit<InputHTMLAttributes<HTMLInputElement>, "size">,
+	extends
+		Omit<InputHTMLAttributes<HTMLInputElement>, "size">,
 		InputControlVariants {
 	ref?: Ref<HTMLInputElement>;
 }

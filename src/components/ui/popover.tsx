@@ -1,7 +1,6 @@
 import { Popover as PopoverPrimitive } from "radix-ui";
 import type { ComponentPropsWithRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const popoverContentVariants = tv({

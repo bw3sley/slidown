@@ -1,6 +1,5 @@
 import { X } from "lucide-react";
 import type { DragEvent, KeyboardEvent, MouseEvent } from "react";
-
 import { DECK_FONT_CLASS } from "@/constants/deck-fonts";
 import { LAYOUT_LABELS, resolveLayoutKey } from "@/constants/slide-layouts";
 import { excerptFor, type ParsedSlide } from "@/lib/slide-parser";
@@ -71,9 +70,11 @@ export function SlideThumbnail({
 			aria-current={isActive}
 			title={`Slide ${index + 1} · ${LAYOUT_LABELS[layoutKey]}`}
 			className={cn(
-				"relative flex h-17 w-28 shrink-0 cursor-pointer flex-col justify-between rounded-[9px] border p-1.75 text-left shadow-sm outline-none transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+				"relative flex h-17 w-28 shrink-0 cursor-pointer flex-col justify-between rounded-[9px] border p-1.75 text-left shadow-sm transition-transform outline-none hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
 				DECK_FONT_CLASS[deckFontId],
-				isActive ? "border-2 shadow-[0_5px_14px_rgba(0,0,0,.16)]" : "border-border",
+				isActive
+					? "border-2 shadow-[0_5px_14px_rgba(0,0,0,.16)]"
+					: "border-border",
 			)}
 			style={{
 				background: theme.bg,

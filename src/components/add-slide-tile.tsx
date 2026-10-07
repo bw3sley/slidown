@@ -1,5 +1,4 @@
 import { Plus } from "lucide-react";
-
 import { useDeckStore } from "@/stores/deck-store";
 
 export function AddSlideTile() {

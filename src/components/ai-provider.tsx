@@ -1,5 +1,4 @@
 import { Sparkles, X } from "lucide-react";
-
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { InputControl, InputRoot } from "@/components/ui/input";
@@ -15,7 +14,6 @@ import { AI_PROVIDER_ORDER, AI_PROVIDERS } from "@/constants/ai-providers";
 import type { AiProviderId } from "@/constants/ai-providers";
 import { useAiStore } from "@/stores/ai-store";
 import { useUiStore } from "@/stores/ui-store";
-
 import { DownloadSkillButton } from "./download-skill";
 
 export function AiProvider() {
@@ -44,7 +42,7 @@ export function AiProvider() {
 			<PopoverTrigger asChild>
 				<Button
 					size="icon"
-					className="absolute bottom-6 right-6 size-13 rounded-full shadow-[0_10px_26px_rgba(0,0,0,.22)] transition-transform hover:scale-105"
+					className="absolute right-6 bottom-6 size-13 rounded-full shadow-[0_10px_26px_rgba(0,0,0,.22)] transition-transform hover:scale-105"
 				>
 					<Sparkles className="fill-current" />
 				</Button>
@@ -53,7 +51,7 @@ export function AiProvider() {
 				align="end"
 				side="top"
 				size="lg"
-				className="w-96 max-h-[68vh] overflow-y-auto"
+				className="max-h-[68vh] w-96 overflow-y-auto"
 			>
 				<div className="flex flex-col gap-4">
 					<div className="flex items-center justify-between">
@@ -68,7 +66,10 @@ export function AiProvider() {
 						</Button>
 					</div>
 
-					<DownloadSkillButton className="w-full justify-start" variant="secondary" />
+					<DownloadSkillButton
+						className="w-full justify-start"
+						variant="secondary"
+					/>
 
 					<ToggleGroup
 						type="single"

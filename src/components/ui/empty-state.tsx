@@ -1,6 +1,5 @@
 import type { HTMLAttributes, Ref } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const emptyStateVariants = tv({
@@ -26,8 +25,7 @@ const emptyStateVariants = tv({
 type EmptyStateVariants = VariantProps<typeof emptyStateVariants>;
 
 interface EmptyStateProps
-	extends HTMLAttributes<HTMLDivElement>,
-		EmptyStateVariants {
+	extends HTMLAttributes<HTMLDivElement>, EmptyStateVariants {
 	ref?: Ref<HTMLDivElement>;
 }
 
@@ -39,8 +37,7 @@ interface EmptyStateTitleProps extends HTMLAttributes<HTMLHeadingElement> {
 	ref?: Ref<HTMLHeadingElement>;
 }
 
-interface EmptyStateDescriptionProps
-	extends HTMLAttributes<HTMLParagraphElement> {
+interface EmptyStateDescriptionProps extends HTMLAttributes<HTMLParagraphElement> {
 	ref?: Ref<HTMLParagraphElement>;
 }
 
@@ -97,7 +94,7 @@ function EmptyStateDescription({
 		<p
 			ref={ref}
 			className={cn(
-				"max-w-sm text-sm text-muted-foreground text-balance",
+				"max-w-sm text-sm text-balance text-muted-foreground",
 				className,
 			)}
 			{...props}

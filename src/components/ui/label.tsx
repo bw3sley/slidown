@@ -1,11 +1,10 @@
 import { Label as LabelPrimitive } from "radix-ui";
 import type { ComponentPropsWithoutRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const labelVariants = tv({
-	base: "inline-flex items-center gap-1 font-medium text-foreground leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+	base: "inline-flex items-center gap-1 leading-none font-medium text-foreground select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
 	variants: {
 		variant: {
 			default: "text-foreground",
@@ -26,8 +25,7 @@ const labelVariants = tv({
 type LabelVariants = VariantProps<typeof labelVariants>;
 
 interface LabelProps
-	extends ComponentPropsWithoutRef<typeof LabelPrimitive.Root>,
-		LabelVariants {}
+	extends ComponentPropsWithoutRef<typeof LabelPrimitive.Root>, LabelVariants {}
 
 function Label({ className, variant, size, ...props }: LabelProps) {
 	return (

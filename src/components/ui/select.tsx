@@ -2,7 +2,6 @@ import { Check, ChevronDown } from "lucide-react";
 import { Select as SelectPrimitive } from "radix-ui";
 import type { ComponentPropsWithRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const selectTriggerVariants = tv({
@@ -58,7 +57,7 @@ const selectContentVariants = tv({
 
 const selectItemVariants = tv({
 	base: [
-		"relative flex w-full cursor-default select-none items-center rounded-md py-2 pr-8 pl-8 text-sm outline-none transition-colors",
+		"relative flex w-full cursor-default items-center rounded-md py-2 pr-8 pl-8 text-sm transition-colors outline-none select-none",
 		"focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground",
 		"data-[state=checked]:bg-primary/10 data-[state=checked]:text-foreground",
 		"data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
@@ -96,7 +95,7 @@ function SelectTrigger({
 			<SelectPrimitive.Icon asChild>
 				<ChevronDown
 					aria-hidden="true"
-					className="shrink-0 size-3.5 text-muted-foreground"
+					className="size-3.5 shrink-0 text-muted-foreground"
 				/>
 			</SelectPrimitive.Icon>
 		</SelectPrimitive.Trigger>

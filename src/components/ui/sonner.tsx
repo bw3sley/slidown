@@ -16,8 +16,7 @@ function Toaster(props: ToasterProps) {
 					description: "!text-current !opacity-90",
 					error:
 						"!border-destructive/30 !bg-destructive !text-destructive-foreground",
-					success:
-						"!border-success/30 !bg-success !text-success-foreground",
+					success: "!border-success/30 !bg-success !text-success-foreground",
 				},
 			}}
 			{...props}

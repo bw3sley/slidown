@@ -16,9 +16,14 @@ function parse(src: string): Root {
 	return processor.parse(src) as Root;
 }
 
-function readFrontmatter(body: string): { entries: [string, string][]; rest: string } {
+function readFrontmatter(body: string): {
+	entries: [string, string][];
+	rest: string;
+} {
 	const first = parse(body).children[0];
-	if (first?.type !== "yaml") {return { entries: [], rest: body };}
+	if (first?.type !== "yaml") {
+		return { entries: [], rest: body };
+	}
 	const entries: [string, string][] = [];
 	for (const line of (first as Yaml).value.split("\n")) {
 		const kv = line.match(FRONTMATTER_LINE_RE);
@@ -65,7 +70,10 @@ export function splitSlides(markdown: string): SlideChunk[] {
 	let lastIndex = 0;
 	const codeRanges: [number, number][] = [];
 	visit(parse(src), "code", (node) => {
-		codeRanges.push([node.position?.start.offset ?? 0, node.position?.end.offset ?? 0]);
+		codeRanges.push([
+			node.position?.start.offset ?? 0,
+			node.position?.end.offset ?? 0,
+		]);
 	});
 	SLIDE_SEPARATOR.lastIndex = 0;
 	for (
@@ -84,7 +92,10 @@ export function splitSlides(markdown: string): SlideChunk[] {
 	return out;
 }
 
-export function parseFrontmatter(body: string): { meta: SlideMeta; rest: string } {
+export function parseFrontmatter(body: string): {
+	meta: SlideMeta;
+	rest: string;
+} {
 	const meta: SlideMeta = {};
 	const { entries, rest } = readFrontmatter(body);
 	for (const [key, raw] of entries) {
@@ -170,7 +181,9 @@ export function setSlideLayout(
 			? others
 			: layoutAt === -1
 				? [["layout", layoutKey], ...others]
-				: entries.map(([key, value]) => (key === "layout" ? [key, layoutKey] : [key, value]));
+				: entries.map(([key, value]) =>
+						key === "layout" ? [key, layoutKey] : [key, value],
+					);
 	if (!next.length) {
 		return rest.trim();
 	}

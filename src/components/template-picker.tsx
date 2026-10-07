@@ -1,5 +1,4 @@
 import { ChevronDown, LayoutGrid } from "lucide-react";
-
 import { SlideLayoutItem } from "@/components/slide-layout-item";
 import {
 	Popover,
@@ -14,7 +13,11 @@ import {
 import type { SlideLayoutKey } from "@/constants/slide-layouts";
 import { getLayoutPreviewRects } from "@/lib/slide-layout";
 import { cn } from "@/lib/utils";
-import { useActiveSlide, useDeckStore, useResolvedDeckTheme } from "@/stores/deck-store";
+import {
+	useActiveSlide,
+	useDeckStore,
+	useResolvedDeckTheme,
+} from "@/stores/deck-store";
 import { useUiStore } from "@/stores/ui-store";
 
 interface TemplatePickerProps {
@@ -40,7 +43,7 @@ export function TemplatePicker({ className }: TemplatePickerProps) {
 		<Popover open={open} onOpenChange={handleOpenChange}>
 			<PopoverTrigger
 				className={cn(
-					"flex cursor-pointer items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground data-[state=open]:text-primary",
+					"flex cursor-pointer items-center gap-1.5 text-xs font-bold tracking-wider text-muted-foreground uppercase transition-colors hover:text-foreground data-[state=open]:text-primary",
 					className,
 				)}
 			>
@@ -52,7 +55,7 @@ export function TemplatePicker({ className }: TemplatePickerProps) {
 			<PopoverContent
 				align="start"
 				size="sm"
-				className="w-56 max-h-90 origin-top-left overflow-y-auto"
+				className="max-h-90 w-56 origin-top-left overflow-y-auto"
 			>
 				<div className="mb-1.5 text-xxs font-bold tracking-[0.06em] text-muted-foreground uppercase">
 					Slide layout

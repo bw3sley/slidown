@@ -1,9 +1,7 @@
 import { AI_PROVIDERS, type AiProviderId } from "@/constants/ai-providers";
-
 import { askClaude } from "@/http/ask-claude";
 import { askGemini } from "@/http/ask-gemini";
 import { askOpenAi } from "@/http/ask-openai";
-
 import { AiClientError } from "@/http/errors/ai-error";
 
 const REQUEST_BY_PROVIDER: Record<
@@ -30,10 +28,12 @@ export async function callModel(
 	}
 
 	try {
-		return await REQUEST_BY_PROVIDER[provider](apiKey, systemPrompt, userMessage);
-	}
-
-	catch (err) {
+		return await REQUEST_BY_PROVIDER[provider](
+			apiKey,
+			systemPrompt,
+			userMessage,
+		);
+	} catch (err) {
 		if (err instanceof AiClientError) {
 			throw err;
 		}

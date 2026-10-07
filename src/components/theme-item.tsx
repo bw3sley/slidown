@@ -1,6 +1,5 @@
 import { Check } from "lucide-react";
 import type { CSSProperties } from "react";
-
 import type { DeckThemeId } from "@/constants/deck-themes";
 import { cn } from "@/lib/utils";
 

@@ -32,7 +32,7 @@ export async function askClaude(
 	}
 
 	const data = (await res.json()) as ClaudeResponse;
-	
+
 	if (data.stop_reason === "refusal") {
 		throw new AiClientError("The model declined this request.");
 	}
@@ -41,10 +41,10 @@ export async function askClaude(
 		.filter((block) => block.type === "text")
 		.map((block) => block.text ?? "")
 		.join("");
-	
-		if (!text) {
+
+	if (!text) {
 		throw new AiClientError("The Claude response was empty or malformed.");
 	}
-	
+
 	return text;
 }

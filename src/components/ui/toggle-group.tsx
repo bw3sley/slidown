@@ -1,14 +1,13 @@
 import { ToggleGroup as ToggleGroupPrimitive } from "radix-ui";
 import { createContext, useContext, type ComponentPropsWithRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const toggleGroupVariants = tv({
 	slots: {
 		root: "inline-flex items-center",
 		item: [
-			"inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors outline-none",
+			"inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap transition-colors outline-none",
 			"focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
 			"disabled:pointer-events-none disabled:opacity-50",
 			"[&_svg]:pointer-events-none [&_svg]:shrink-0",

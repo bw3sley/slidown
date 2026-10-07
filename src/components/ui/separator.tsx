@@ -1,7 +1,6 @@
 import { Separator as SeparatorPrimitive } from "radix-ui";
 import type { ComponentPropsWithoutRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const separatorVariants = tv({
@@ -26,7 +25,8 @@ const separatorVariants = tv({
 type SeparatorVariants = VariantProps<typeof separatorVariants>;
 
 interface SeparatorProps
-	extends ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>,
+	extends
+		ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>,
 		SeparatorVariants {}
 
 function Separator({

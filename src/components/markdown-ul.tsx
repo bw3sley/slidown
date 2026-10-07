@@ -1,12 +1,15 @@
 import { useContext } from "react";
-
 import {
 	ListDepthContext,
 	SlideTextContext,
 } from "@/lib/slide-markdown-context";
 import type { TagProps } from "@/lib/slide-markdown-context";
 
-export function MarkdownUl({ node: _node, children, ...props }: TagProps<"ul">) {
+export function MarkdownUl({
+	node: _node,
+	children,
+	...props
+}: TagProps<"ul">) {
 	const depth = useContext(ListDepthContext);
 	const text = useContext(SlideTextContext);
 

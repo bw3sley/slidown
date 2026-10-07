@@ -1,12 +1,15 @@
 import { ChevronDown } from "lucide-react";
-
 import { FontPickerItem } from "@/components/font-picker-item";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { DECK_FONT_CLASS, DECK_FONT_ORDER, DECK_FONTS } from "@/constants/deck-fonts";
+import {
+	DECK_FONT_CLASS,
+	DECK_FONT_ORDER,
+	DECK_FONTS,
+} from "@/constants/deck-fonts";
 import { cn } from "@/lib/utils";
 import { useDeckStore } from "@/stores/deck-store";
 import { useUiStore } from "@/stores/ui-store";

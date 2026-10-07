@@ -53,10 +53,10 @@ const slide = tv({
 	slots: {
 		row: "relative flex min-h-0 flex-1 flex-col items-stretch justify-start gap-22",
 		contentCol:
-			"relative z-2 flex min-h-0 min-w-0 flex-col gap-16 flex-initial items-stretch justify-start text-left w-auto order-0",
+			"relative z-2 order-0 flex min-h-0 w-auto min-w-0 flex-initial flex-col items-stretch justify-start gap-16 text-left",
 		body: "min-h-0 flex-auto overflow-hidden [line-height:1.42] " + FS[32],
 		header:
-			"shrink-0 text-(--accent) font-bold tracking-[.08em] uppercase " + FS[19],
+			"shrink-0 font-bold tracking-[.08em] text-(--accent) uppercase " + FS[19],
 		footer:
 			"flex shrink-0 justify-between gap-24 border-t border-current pt-15 font-['Plus_Jakarta_Sans',sans-serif] opacity-60 " +
 			FS[18],
@@ -64,7 +64,7 @@ const slide = tv({
 	variants: {
 		isTitle: {
 			true: {
-				contentCol: "justify-center items-center text-center",
+				contentCol: "items-center justify-center text-center",
 				body: "flex-initial " + FS[38],
 				footer: "justify-center",
 			},
@@ -95,7 +95,7 @@ const slide = tv({
 		isFrame: {
 			true: {
 				row: "items-center justify-center",
-				contentCol: "items-center text-center order-2 w-full",
+				contentCol: "order-2 w-full items-center text-center",
 				footer: "justify-center",
 			},
 		},
@@ -124,11 +124,10 @@ const imageSlot = tv({
 	base: "relative z-2 min-h-0 overflow-hidden",
 	variants: {
 		kind: {
-			inline: `self-stretch ${ROUNDED[10]} flex-[1.2_1_0] order-0`,
-			split: `self-stretch ${ROUNDED[10]} flex-[0.8_1_0] order-1`,
-			mediaTop: `min-h-180 max-h-300 ${ROUNDED[10]} flex-[1_1_0] order-1`,
-			frame:
-				`min-h-160 max-h-320 w-[62%] ${ROUNDED[6]} flex-[1_1_0] order-1 border-[length:calc(var(--spacing)*10)] border-[rgba(128,128,128,.09)] shadow-[0_calc(var(--spacing)*10)_calc(var(--spacing)*30)_rgba(0,0,0,.18)]`,
+			inline: `self-stretch ${ROUNDED[10]} order-0 flex-[1.2_1_0]`,
+			split: `self-stretch ${ROUNDED[10]} order-1 flex-[0.8_1_0]`,
+			mediaTop: `max-h-300 min-h-180 ${ROUNDED[10]} order-1 flex-[1_1_0]`,
+			frame: `max-h-320 min-h-160 w-[62%] ${ROUNDED[6]} order-1 flex-[1_1_0] border-[length:calc(var(--spacing)*10)] border-[rgba(128,128,128,.09)] shadow-[0_calc(var(--spacing)*10)_calc(var(--spacing)*30)_rgba(0,0,0,.18)]`,
 			bento: `${ROUNDED[14]} shadow-[0_calc(var(--spacing)*8)_calc(var(--spacing)*24)_rgba(0,0,0,.14)]`,
 		},
 	},
@@ -148,34 +147,81 @@ const GALLERY = "minmax(0,1.4fr) minmax(0,1fr)";
 const BENTO_TEXT_GRIDS: BentoGrid[] = [
 	{ columns: ONE, rows: 1, tiles: [] },
 	{ columns: WIDE_LEFT, rows: 2, tiles: [[2, 4, 1, 3]] },
-	{ columns: WIDE_LEFT, rows: 2, tiles: [[2, 4, 1, 2], [2, 4, 2, 3]] },
-	{ columns: WIDE_LEFT, rows: 2, tiles: [[2, 3, 1, 2], [3, 4, 1, 2], [2, 4, 2, 3]] },
 	{
 		columns: WIDE_LEFT,
 		rows: 2,
-		tiles: [[2, 3, 1, 2], [3, 4, 1, 2], [2, 3, 2, 3], [3, 4, 2, 3]],
+		tiles: [
+			[2, 4, 1, 2],
+			[2, 4, 2, 3],
+		],
+	},
+	{
+		columns: WIDE_LEFT,
+		rows: 2,
+		tiles: [
+			[2, 3, 1, 2],
+			[3, 4, 1, 2],
+			[2, 4, 2, 3],
+		],
+	},
+	{
+		columns: WIDE_LEFT,
+		rows: 2,
+		tiles: [
+			[2, 3, 1, 2],
+			[3, 4, 1, 2],
+			[2, 3, 2, 3],
+			[3, 4, 2, 3],
+		],
 	},
 ];
 
 const BENTO_GALLERY_GRIDS: BentoGrid[] = [
 	{ columns: ONE, rows: 1, tiles: [] },
 	{ columns: ONE, rows: 1, tiles: [[1, 2, 1, 2]] },
-	{ columns: GALLERY, rows: 1, tiles: [[1, 2, 1, 2], [2, 3, 1, 2]] },
-	{ columns: GALLERY, rows: 2, tiles: [[1, 2, 1, 3], [2, 3, 1, 2], [2, 3, 2, 3]] },
+	{
+		columns: GALLERY,
+		rows: 1,
+		tiles: [
+			[1, 2, 1, 2],
+			[2, 3, 1, 2],
+		],
+	},
+	{
+		columns: GALLERY,
+		rows: 2,
+		tiles: [
+			[1, 2, 1, 3],
+			[2, 3, 1, 2],
+			[2, 3, 2, 3],
+		],
+	},
 	{
 		columns: GALLERY,
 		rows: 3,
-		tiles: [[1, 2, 1, 4], [2, 3, 1, 2], [2, 3, 2, 3], [2, 3, 3, 4]],
+		tiles: [
+			[1, 2, 1, 4],
+			[2, 3, 1, 2],
+			[2, 3, 2, 3],
+			[2, 3, 3, 4],
+		],
 	},
 	{
 		columns: WIDE_LEFT,
 		rows: 2,
-		tiles: [[1, 2, 1, 3], [2, 3, 1, 2], [3, 4, 1, 2], [2, 3, 2, 3], [3, 4, 2, 3]],
+		tiles: [
+			[1, 2, 1, 3],
+			[2, 3, 1, 2],
+			[3, 4, 1, 2],
+			[2, 3, 2, 3],
+			[3, 4, 2, 3],
+		],
 	},
 ];
 
 function bentoGridFor(imageCount: number, hasBody: boolean): BentoGrid {
-	const grids = hasBody || imageCount === 0 ? BENTO_TEXT_GRIDS : BENTO_GALLERY_GRIDS;
+	const grids =
+		hasBody || imageCount === 0 ? BENTO_TEXT_GRIDS : BENTO_GALLERY_GRIDS;
 	return grids[Math.min(imageCount, grids.length - 1)];
 }
 
@@ -186,7 +232,14 @@ export interface LayoutPreviewTheme {
 }
 
 type PreviewTone = "bg" | "ink" | "accent" | (string & {});
-type PreviewRect = [x: number, y: number, w: number, h: number, tone: PreviewTone, opacity?: number];
+type PreviewRect = [
+	x: number,
+	y: number,
+	w: number,
+	h: number,
+	tone: PreviewTone,
+	opacity?: number,
+];
 
 type PreviewShape = PreviewRect | CSSProperties;
 
@@ -197,10 +250,28 @@ function textLines(x: number, ys: number[], widths: number[]): PreviewRect[] {
 }
 
 const LAYOUT_PREVIEW_RECTS: Record<SlideLayoutKey, PreviewShape[]> = {
-	title: [[15, 13, 30, 6, T], [19, 23, 22, 3, I, 0.45]],
+	title: [
+		[15, 13, 30, 6, T],
+		[19, 23, 22, 3, I, 0.45],
+	],
 	split: [...textLines(6, [9, 15, 21], [20, 20, 15]), [34, 6, 24, 30, T]],
-	"full-bleed": [[0, 0, 64, 42, T], { position: "absolute", left: 0, right: 0, bottom: 0, height: 16, background: "rgba(0,0,0,.55)" }, [6, 30, 26, 3, "#fff", 0.9]],
-	stack: [[6, 6, 14, 3, T], [6, 12, 30, 5, I, 0.8], ...textLines(6, [20, 26, 32], [36, 30, 22])],
+	"full-bleed": [
+		[0, 0, 64, 42, T],
+		{
+			position: "absolute",
+			left: 0,
+			right: 0,
+			bottom: 0,
+			height: 16,
+			background: "rgba(0,0,0,.55)",
+		},
+		[6, 30, 26, 3, "#fff", 0.9],
+	],
+	stack: [
+		[6, 6, 14, 3, T],
+		[6, 12, 30, 5, I, 0.8],
+		...textLines(6, [20, 26, 32], [36, 30, 22]),
+	],
 	bento: [
 		...textLines(6, [13, 19, 25], [22, 22, 16]),
 		[33, 6, 12, 14, T],
@@ -212,7 +283,11 @@ const LAYOUT_PREVIEW_RECTS: Record<SlideLayoutKey, PreviewShape[]> = {
 		...textLines(6, [8, 14, 20, 26], [20, 20, 16, 18]),
 		...textLines(34, [8, 14, 20, 26], [20, 20, 16, 18]),
 	],
-	frame: [[14, 4, 36, 22, "bg", 0.9], [18, 8, 28, 14, T], [20, 30, 24, 3, I, 0.5]],
+	frame: [
+		[14, 4, 36, 22, "bg", 0.9],
+		[18, 8, 28, 14, T],
+		[20, 30, 24, 3, I, 0.5],
+	],
 };
 
 export function getLayoutPreviewRects(
@@ -232,8 +307,11 @@ export function getLayoutPreviewRects(
 			height,
 			borderRadius: 1.5,
 			opacity,
-			background: tone in theme ? theme[tone as keyof LayoutPreviewTheme] : tone,
-			...(tone === "bg" ? { border: `2px solid ${theme.ink}`, boxSizing: "border-box" as const } : {}),
+			background:
+				tone in theme ? theme[tone as keyof LayoutPreviewTheme] : tone,
+			...(tone === "bg"
+				? { border: `2px solid ${theme.ink}`, boxSizing: "border-box" as const }
+				: {}),
 		};
 	});
 }
@@ -275,7 +353,10 @@ export function layoutFor(
 	const rowStyle: CSSProperties = isBento
 		? {
 				gridTemplateColumns: bentoGrid.columns,
-				gridTemplateRows: [...(rowOffset ? ["auto"] : []), ...Array(bentoGrid.rows).fill(ONE)].join(" "),
+				gridTemplateRows: [
+					...(rowOffset ? ["auto"] : []),
+					...Array(bentoGrid.rows).fill(ONE),
+				].join(" "),
 			}
 		: {};
 
@@ -291,7 +372,13 @@ export function layoutFor(
 			? [
 					{
 						className: imageSlot({
-							kind: isMediaTop ? "mediaTop" : isFrame ? "frame" : isSplit ? "split" : "inline",
+							kind: isMediaTop
+								? "mediaTop"
+								: isFrame
+									? "frame"
+									: isSplit
+										? "split"
+										: "inline",
 						}),
 					},
 				]
@@ -318,12 +405,13 @@ const text = tv({
 		h2: "mb-[.34em] text-[1.36em] leading-[1.14] font-bold tracking-[-.016em]",
 		h3: "mb-[.36em] text-[1.1em] leading-[1.2] font-bold",
 		p: "mb-[.55em] opacity-[.86]",
-		ul: "mb-[.55em] list-none flex flex-col gap-[.32em]",
+		ul: "mb-[.55em] flex list-none flex-col gap-[.32em]",
 		nestedUl: "mt-[.32em] ml-[1.4em]",
 		li: "flex items-baseline gap-[.5em] opacity-[.86]",
 		liMarker: "shrink-0 text-[1.3em] font-bold text-(--accent)",
 		nestedLiMarker: "shrink-0 text-current opacity-50",
-		blockquote: "mt-[.2em] mb-[.6em] border-l-[.125em] border-(--accent) pl-[.7em] italic opacity-95",
+		blockquote:
+			"mt-[.2em] mb-[.6em] border-l-[.125em] border-(--accent) pl-[.7em] italic opacity-95",
 		code: "rounded-[.19em] bg-[rgba(128,128,128,.18)] px-[.32em] py-[.1em] font-['IBM_Plex_Mono',monospace] text-[.82em]",
 	},
 	variants: {
@@ -333,7 +421,7 @@ const text = tv({
 				h2: "[column-span:all]",
 				h3: "[column-span:all]",
 				ul: "block",
-				li: "break-inside-avoid mb-[.32em]",
+				li: "mb-[.32em] break-inside-avoid",
 			},
 		},
 	},

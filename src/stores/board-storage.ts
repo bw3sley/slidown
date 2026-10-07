@@ -19,11 +19,15 @@ export function getBoardStorageKey(
 	return `slidown-v${DECK_STORAGE_VERSION}:${kind}:${encodeURIComponent(boardId)}`;
 }
 
-function getLegacyBoardStorageKey(boardId: string, kind: BoardStorageKind): string | null {
+function getLegacyBoardStorageKey(
+	boardId: string,
+	kind: BoardStorageKind,
+): string | null {
 	if (boardId === "/default") {
 		return null;
 	}
-	const legacyId = boardId === "/" ? "default" : boardId.replace(/^\/+|\/+$/g, "");
+	const legacyId =
+		boardId === "/" ? "default" : boardId.replace(/^\/+|\/+$/g, "");
 	const key = `slidown-v1:${legacyId}`;
 	return kind === "ai" ? `${key}:ai` : key;
 }
@@ -47,9 +51,12 @@ function isLegacyValueForKind(value: string, kind: BoardStorageKind): boolean {
 }
 
 function reportStorageError(): void {
-	toast.error("Local storage is unavailable. Changes to this board won't be saved.", {
-		id: "board-storage-error",
-	});
+	toast.error(
+		"Local storage is unavailable. Changes to this board won't be saved.",
+		{
+			id: "board-storage-error",
+		},
+	);
 }
 
 export function createBoardStorage(
@@ -68,9 +75,10 @@ export function createBoardStorage(
 				}
 
 				const legacy = legacyKey ? localStorage.getItem(legacyKey) : null;
-				const value = legacy && isLegacyValueForKind(legacy, kind)
-					? legacy
-					: initialValue ?? null;
+				const value =
+					legacy && isLegacyValueForKind(legacy, kind)
+						? legacy
+						: (initialValue ?? null);
 				if (value !== null) {
 					localStorage.setItem(name, value);
 				}

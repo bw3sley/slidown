@@ -16,7 +16,6 @@ import {
 	type FieldValues,
 } from "react-hook-form";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { Label, type LabelProps } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
@@ -41,7 +40,7 @@ const formItemVariants = tv({
 });
 
 const formDescriptionVariants = tv({
-	base: "text-muted-foreground leading-snug",
+	base: "leading-snug text-muted-foreground",
 	variants: {
 		variant: {
 			default: "text-muted-foreground",
@@ -61,7 +60,7 @@ const formDescriptionVariants = tv({
 });
 
 const formMessageVariants = tv({
-	base: "font-medium leading-snug",
+	base: "leading-snug font-medium",
 	variants: {
 		variant: {
 			default: "text-destructive",

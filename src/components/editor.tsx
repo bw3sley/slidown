@@ -1,7 +1,6 @@
 import MonacoEditor, { type OnMount } from "@monaco-editor/react";
 import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
-
 import { useActiveSlide, useDeckStore } from "@/stores/deck-store";
 
 type MonacoEditorInstance = Parameters<OnMount>[0];

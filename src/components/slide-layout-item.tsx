@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-
 import type { SlideLayoutKey } from "@/constants/slide-layouts";
 import { cn } from "@/lib/utils";
 

@@ -1,7 +1,6 @@
 import { Switch as SwitchPrimitive } from "radix-ui";
 import type { ComponentPropsWithRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const switchVariants = tv({
@@ -51,7 +50,11 @@ function Switch({ className, variant, size, ref, ...props }: SwitchProps) {
 	const { root, thumb } = switchVariants({ variant, size });
 
 	return (
-		<SwitchPrimitive.Root ref={ref} className={cn(root(), className)} {...props}>
+		<SwitchPrimitive.Root
+			ref={ref}
+			className={cn(root(), className)}
+			{...props}
+		>
 			<SwitchPrimitive.Thumb className={thumb()} />
 		</SwitchPrimitive.Root>
 	);

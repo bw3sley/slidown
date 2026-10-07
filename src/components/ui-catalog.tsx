@@ -18,7 +18,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -76,9 +75,9 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { Toaster } from "@/components/ui/sonner";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Toaster } from "@/components/ui/sonner";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
 	Tooltip,
@@ -145,7 +144,6 @@ export function UiCatalog() {
 	);
 }
 
-
 function Section({
 	title,
 	description,
@@ -179,7 +177,6 @@ function Row({ label, children }: { label: string; children: ReactNode }) {
 	);
 }
 
-
 function PageHeader({
 	isDark,
 	onToggleTheme,
@@ -198,7 +195,8 @@ function PageHeader({
 						Slidown UI primitives
 					</h1>
 					<p className="text-sm text-muted-foreground">
-						20 components in <code className="font-mono">src/components/ui</code>
+						20 components in{" "}
+						<code className="font-mono">src/components/ui</code>
 					</p>
 				</div>
 			</div>
@@ -328,7 +326,11 @@ function FieldSection() {
 				<InputControl className="w-40" placeholder="sm" size="sm" />
 				<InputControl className="w-40" placeholder="md" size="md" />
 				<InputControl className="w-40" placeholder="lg" size="lg" />
-				<InputControl className="w-40" placeholder="outline" variant="outline" />
+				<InputControl
+					className="w-40"
+					placeholder="outline"
+					variant="outline"
+				/>
 			</Row>
 
 			<Row label="label sizes">
@@ -432,7 +434,11 @@ function SelectionSection() {
 				>
 					{DECK_THEMES.map(function renderTheme(item) {
 						return (
-							<RadioGroupItem key={item.value} value={item.value} variant="card">
+							<RadioGroupItem
+								key={item.value}
+								value={item.value}
+								variant="card"
+							>
 								<span
 									className="block h-9 w-full rounded-md border border-border"
 									style={{ background: item.bg }}
@@ -736,7 +742,8 @@ function SurfaceSection() {
 	);
 }
 
-function ValidatedFormSection() {	const form = useForm<DemoValues>({
+function ValidatedFormSection() {
+	const form = useForm<DemoValues>({
 		defaultValues: {
 			accent: "",
 			autosave: false,

@@ -1,5 +1,4 @@
 import { AI_PROVIDERS } from "@/constants/ai-providers";
-
 import { AiClientError } from "@/http/errors/ai-error";
 
 interface OpenAiResponse {
@@ -31,12 +30,12 @@ export async function askOpenAi(
 	}
 
 	const data = (await res.json()) as OpenAiResponse;
-	
+
 	const text = data.choices?.[0]?.message?.content;
-	
+
 	if (!text) {
 		throw new AiClientError("The OpenAI response was empty or malformed.");
 	}
-	
+
 	return text;
 }

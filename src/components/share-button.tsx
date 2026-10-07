@@ -1,11 +1,4 @@
-import {
-	Download,
-	FileDown,
-	FileType2,
-	Link2,
-	Share2,
-} from "lucide-react";
-
+import { Download, FileDown, FileType2, Link2, Share2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,7 +37,11 @@ export function ShareButton() {
 				<DropdownMenuItem disabled>
 					<Link2 className="size-3.5" />
 					<span className="flex-1">Copy link</span>
-					<Badge variant="muted" size="sm" className="font-bold uppercase tracking-wide">
+					<Badge
+						variant="muted"
+						size="sm"
+						className="font-bold tracking-wide uppercase"
+					>
 						Soon
 					</Badge>
 				</DropdownMenuItem>
@@ -61,7 +58,11 @@ export function ShareButton() {
 
 					<span className="flex-1">Export as PPTX</span>
 
-					<Badge variant="muted" size="sm" className="font-bold uppercase tracking-wide">
+					<Badge
+						variant="muted"
+						size="sm"
+						className="font-bold tracking-wide uppercase"
+					>
 						Soon
 					</Badge>
 				</DropdownMenuItem>

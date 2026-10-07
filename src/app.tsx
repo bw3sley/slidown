@@ -1,5 +1,4 @@
 import { ThemeProvider } from "next-themes";
-
 import { Editor } from "@/components/editor";
 import { Header } from "@/components/header";
 import { Preview } from "@/components/preview";

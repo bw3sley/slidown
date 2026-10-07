@@ -1,6 +1,5 @@
 import type { Ref, TextareaHTMLAttributes } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const textareaVariants = tv({
@@ -25,18 +24,11 @@ const textareaVariants = tv({
 type TextareaVariants = VariantProps<typeof textareaVariants>;
 
 interface TextareaProps
-	extends TextareaHTMLAttributes<HTMLTextAreaElement>,
-		TextareaVariants {
+	extends TextareaHTMLAttributes<HTMLTextAreaElement>, TextareaVariants {
 	ref?: Ref<HTMLTextAreaElement>;
 }
 
-function Textarea({
-	className,
-	variant,
-	size,
-	ref,
-	...props
-}: TextareaProps) {
+function Textarea({ className, variant, size, ref, ...props }: TextareaProps) {
 	return (
 		<textarea
 			ref={ref}

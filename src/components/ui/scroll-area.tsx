@@ -1,7 +1,6 @@
 import { ScrollArea as ScrollAreaPrimitive } from "radix-ui";
 import type { ComponentPropsWithRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const scrollAreaVariants = tv({
@@ -10,7 +9,7 @@ const scrollAreaVariants = tv({
 		viewport:
 			"size-full rounded-[inherit] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
 		scrollbar:
-			"flex touch-none select-none p-px transition-colors data-[orientation=horizontal]:flex-col",
+			"flex touch-none p-px transition-colors select-none data-[orientation=horizontal]:flex-col",
 		thumb:
 			"relative flex-1 rounded-full bg-muted-foreground/40 transition-colors hover:bg-muted-foreground/60",
 	},
@@ -22,15 +21,15 @@ const scrollAreaVariants = tv({
 		size: {
 			sm: {
 				scrollbar:
-					"data-[orientation=vertical]:w-1.5 data-[orientation=horizontal]:h-1.5",
+					"data-[orientation=horizontal]:h-1.5 data-[orientation=vertical]:w-1.5",
 			},
 			md: {
 				scrollbar:
-					"data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:h-2.5",
+					"data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5",
 			},
 			lg: {
 				scrollbar:
-					"data-[orientation=vertical]:w-3.5 data-[orientation=horizontal]:h-3.5",
+					"data-[orientation=horizontal]:h-3.5 data-[orientation=vertical]:w-3.5",
 			},
 		},
 	},

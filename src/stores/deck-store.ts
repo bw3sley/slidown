@@ -1,31 +1,21 @@
-
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-
-import {
-	type DeckFontId,
-	DECK_FONT_ORDER,
-} from "@/constants/deck-fonts";
-
+import { type DeckFontId, DECK_FONT_ORDER } from "@/constants/deck-fonts";
 import {
 	type DeckTheme,
 	type DeckThemeId,
 	resolveDeckTheme,
 } from "@/constants/deck-themes";
-
 import type { SlideLayoutKey } from "@/constants/slide-layouts";
-
 import { DEFAULT_MD } from "@/constants/starter-deck";
-
-import { createBoardStorage, getBoardStorageKey } from "@/stores/board-storage";
-
 import {
 	joinSlides,
 	parseDeck,
 	type ParsedSlide,
 	setSlideLayout as setSlideLayoutSource,
 } from "@/lib/slide-parser";
+import { createBoardStorage, getBoardStorageKey } from "@/stores/board-storage";
 
 interface DeckState {
 	markdown: string;

@@ -1,6 +1,5 @@
 import type { HTMLAttributes, Ref } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const cardVariants = tv({
@@ -12,7 +11,7 @@ const cardVariants = tv({
 			muted: "border border-transparent bg-muted",
 			accent: "border border-border bg-accent text-accent-foreground",
 			interactive:
-				"cursor-pointer border border-border bg-card shadow-sm transition-colors hover:border-primary/60 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+				"cursor-pointer border border-border bg-card shadow-sm transition-colors outline-none hover:border-primary/60 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
 		},
 		size: {
 			sm: "gap-2 p-3",
@@ -20,7 +19,7 @@ const cardVariants = tv({
 			lg: "gap-4 p-6",
 		},
 		interactive: {
-			true: "cursor-pointer transition-colors hover:border-primary/60 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+			true: "cursor-pointer transition-colors outline-none hover:border-primary/60 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
 			false: "",
 		},
 	},
@@ -89,7 +88,7 @@ function CardTitle({ className, ref, ...props }: CardTitleProps) {
 		<h3
 			ref={ref}
 			className={cn(
-				"text-base font-semibold leading-none tracking-tight",
+				"text-base leading-none font-semibold tracking-tight",
 				className,
 			)}
 			{...props}

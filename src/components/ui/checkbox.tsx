@@ -2,7 +2,6 @@ import { Check, Minus } from "lucide-react";
 import { Checkbox as CheckboxPrimitive } from "radix-ui";
 import type { ComponentPropsWithRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const checkboxVariants = tv({
@@ -88,4 +87,9 @@ function Checkbox({ className, variant, size, ref, ...props }: CheckboxProps) {
 	);
 }
 
-export { Checkbox, checkboxVariants, type CheckboxProps, type CheckboxVariants };
+export {
+	Checkbox,
+	checkboxVariants,
+	type CheckboxProps,
+	type CheckboxVariants,
+};

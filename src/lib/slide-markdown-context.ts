@@ -1,5 +1,4 @@
 import { createContext } from "react";
-
 import { getSlideTextClasses } from "@/lib/slide-layout";
 import type { SlideTextClasses } from "@/lib/slide-layout";
 

@@ -1,6 +1,5 @@
 import { ChevronRight, Download } from "lucide-react";
 import type { ComponentPropsWithoutRef } from "react";
-
 import { Button } from "@/components/ui/button";
 import { useDownloadSkill } from "@/hooks/use-download-skill";
 import { cn } from "@/lib/utils";

@@ -1,10 +1,9 @@
 import type { ButtonHTMLAttributes } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const buttonVariants = tv({
-	base: "cursor-pointer inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+	base: "inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
 	variants: {
 		variant: {
 			default:
@@ -37,8 +36,7 @@ const buttonVariants = tv({
 type ButtonVariants = VariantProps<typeof buttonVariants>;
 
 interface ButtonProps
-	extends ButtonHTMLAttributes<HTMLButtonElement>,
-		ButtonVariants {}
+	extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariants {}
 
 function Button({
 	className,

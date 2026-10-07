@@ -1,6 +1,5 @@
 import type { HTMLAttributes, Ref } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const alertVariants = tv({
@@ -55,7 +54,7 @@ function AlertTitle({ className, ref, ...props }: AlertTitleProps) {
 		<h5
 			ref={ref}
 			className={cn(
-				"col-start-2 font-medium leading-none tracking-tight",
+				"col-start-2 leading-none font-medium tracking-tight",
 				className,
 			)}
 			{...props}

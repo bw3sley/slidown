@@ -1,7 +1,6 @@
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 import type { ComponentPropsWithRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-
 import { cn } from "@/lib/utils";
 
 const dropdownMenuContentVariants = tv({
@@ -29,7 +28,7 @@ const dropdownMenuContentVariants = tv({
 
 const dropdownMenuItemVariants = tv({
 	base: [
-		"relative flex cursor-default select-none items-center rounded-md outline-none transition-colors",
+		"relative flex cursor-default items-center rounded-md transition-colors outline-none select-none",
 		"focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground",
 		"data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
 		"data-[inset]:pl-8",

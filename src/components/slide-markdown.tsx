@@ -1,6 +1,5 @@
 import ReactMarkdown from "react-markdown";
 import type { Components } from "react-markdown";
-
 import { MarkdownLi } from "@/components/markdown-li";
 import { MarkdownUl } from "@/components/markdown-ul";
 import { getSlideTextClasses } from "@/lib/slide-layout";
@@ -37,7 +36,9 @@ export function SlideMarkdown({ markdown, columns }: SlideMarkdownProps) {
 		blockquote: ({ node: _node, ...props }) => (
 			<blockquote className={text.blockquote} {...props} />
 		),
-		code: ({ node: _node, ...props }) => <code className={text.code} {...props} />,
+		code: ({ node: _node, ...props }) => (
+			<code className={text.code} {...props} />
+		),
 	};
 
 	return (
