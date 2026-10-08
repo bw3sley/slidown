@@ -1,4 +1,5 @@
-import type { Root, Yaml } from "mdast";
+import type { Blockquote, List, ListItem, Nodes, Root, Yaml } from "mdast";
+import { toString } from "mdast-util-to-string";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
@@ -191,13 +192,23 @@ export function setSlideLayout(
 }
 
 export function excerptFor(raw: string): string {
-	const firstLine =
-		raw
-			.split("\n")
-			.find((line) => line.trim().length > 0)
-			?.replace(/^#+\s*/, "")
-			.replace(/^>\s*/, "")
-			.replace(/^[-*]\s*/, "")
-			.trim() ?? "Empty slide";
-	return firstLine.slice(0, 42);
+	let node: Nodes | undefined = parse(raw).children.find(
+		(child) => toString(child).trim().length > 0,
+	);
+	while (node && "children" in node && isContainer(node)) {
+		node = node.children.find((child) => toString(child).trim().length > 0);
+	}
+	const text = node ? toString(node).trim() : "";
+	return (text.split("\n").find((line) => line.trim()) ?? "Empty slide").slice(
+		0,
+		42,
+	);
+}
+
+function isContainer(node: Nodes): node is List | ListItem | Blockquote {
+	return (
+		node.type === "list" ||
+		node.type === "listItem" ||
+		node.type === "blockquote"
+	);
 }
