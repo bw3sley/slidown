@@ -17,7 +17,7 @@ npm run og            # regenerate public/og-image.png and apple-touch-icon.png
 
 - **Framework** - React 19, client-side SPA (no SSR, no router)
 - **Build** - Vite 8
-- **Styling** - Tailwind CSS v4 + CSS variable theme tokens
+- **Styling** - Tailwind CSS v4 + CSS variable theme tokens. Slide text is styled via `@tailwindcss/typography` `prose` overrides in `src/components/slide-markdown.tsx`
 - **UI primitives** - local components in `src/components/ui/` built with Radix UI where needed
 - **State** - Zustand (with Immer) in `src/stores/`
 - **Forms** - React Hook Form + Zod
