@@ -33,7 +33,11 @@ const slideProse = tv({
 		"prose-p:mt-0 prose-p:mb-[.55em] prose-p:opacity-[.86]",
 		"prose-strong:font-bold",
 		"prose-ul:mt-0 prose-ul:mb-[.55em] prose-ul:list-disc prose-ul:pl-[1.2em] [&_ul_ul]:mt-[.32em] [&_ul_ul]:mb-0",
-		"prose-li:my-0 prose-li:pl-0 prose-li:opacity-[.86] prose-li:marker:text-(--accent) [&_li+li]:mt-[.32em]",
+		// marker type follows nesting depth: disc > circle > square, decimal > alpha > roman
+		"[&_ul_ul]:list-[circle] [&_ul_ul_ul]:list-[square] [&_ul_ul_ul_ul]:list-disc",
+		"prose-ol:list-decimal [&_ol_ol]:list-[lower-alpha] [&_ol_ol_ol]:list-[lower-roman] [&_ol_ol_ol_ol]:list-decimal",
+		"[&_ol_ul]:list-[circle] [&_ul_ol]:list-[lower-alpha]",
+		"prose-li:my-0 prose-li:pl-0 prose-li:marker:text-(--accent) [&_li+li]:mt-[.32em]",
 		// quote
 		"prose-blockquote:mt-[.2em] prose-blockquote:mb-[.6em] prose-blockquote:border-l-[.125em] prose-blockquote:border-(--accent) prose-blockquote:pl-[.7em] prose-blockquote:font-normal prose-blockquote:italic prose-blockquote:opacity-95 prose-blockquote:[quotes:none]",
 		"[&_blockquote_p]:before:content-none [&_blockquote_p]:after:content-none",
