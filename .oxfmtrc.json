@@ -1,0 +1,14 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"useTabs": true,
+	"endOfLine": "lf",
+	"printWidth": 80,
+	"sortImports": {
+		"newlinesBetween": false
+	},
+	"sortTailwindcss": {
+		"stylesheet": "./src/index.css",
+		"functions": ["cn", "tv", "clsx"]
+	},
+	"ignorePatterns": ["dist", "node_modules", "public", "*.md"]
+}

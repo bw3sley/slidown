@@ -1,0 +1,13 @@
+{
+  "name": "Slidown",
+  "short_name": "Slidown",
+  "description": "Markdown to slides, instantly.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f4f6",
+  "theme_color": "#5a6eea",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/apple-touch-icon.png", "type": "image/png", "sizes": "180x180" }
+  ]
+}
