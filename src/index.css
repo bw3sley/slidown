@@ -76,7 +76,7 @@
 	--muted: oklch(from #141418 l c h);
 	--muted-foreground: oklch(from #8e8e99 l c h);
 
-	--accent: oklch(from rgba(147, 168, 255, 0.14) l c h);
+	--accent: oklch(from #93a8ff l c h / 0.14);
 	--accent-foreground: oklch(from #d7deff l c h);
 
 	--border: oklch(from #2c2c33 l c h);
