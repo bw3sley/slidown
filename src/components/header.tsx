@@ -1,6 +1,7 @@
 import { Presentation } from "lucide-react";
 import { DarkModeToggle } from "@/components/dark-mode-toggle";
 import { FontPicker } from "@/components/font-picker";
+import { MobileSettingsMenu } from "@/components/mobile-settings-menu";
 import { ShareButton } from "@/components/share-button";
 import { ThemePicker } from "@/components/theme-picker";
 
@@ -15,9 +16,14 @@ export function Header() {
 			</div>
 
 			<div className="flex items-center gap-1.5">
-				<ThemePicker />
-				<FontPicker />
-				<DarkModeToggle />
+				<div className="hidden items-center gap-1.5 md:flex">
+					<ThemePicker />
+					<FontPicker />
+					<DarkModeToggle />
+				</div>
+				<div className="md:hidden">
+					<MobileSettingsMenu />
+				</div>
 				<ShareButton />
 			</div>
 		</header>

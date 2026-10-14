@@ -27,7 +27,7 @@ export function ShareButton() {
 	return (
 		<DropdownMenu open={open} onOpenChange={handleOpenChange}>
 			<DropdownMenuTrigger asChild>
-				<Button size="md" className="ml-3">
+				<Button size="md" className="md:ml-3">
 					<Share2 className="size-3.5" />
 					Share
 				</Button>
