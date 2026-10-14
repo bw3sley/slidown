@@ -26,7 +26,7 @@ export async function askOpenAi(
 	});
 
 	if (!res.ok) {
-		throw new AiClientError(`OpenAI request failed (${res.status}).`);
+		throw new AiClientError(`OpenAI request failed (${res.status}).`, "provider_error");
 	}
 
 	const data = (await res.json()) as OpenAiResponse;
@@ -34,7 +34,7 @@ export async function askOpenAi(
 	const text = data.choices?.[0]?.message?.content;
 
 	if (!text) {
-		throw new AiClientError("The OpenAI response was empty or malformed.");
+		throw new AiClientError("The OpenAI response was empty or malformed.", "empty_response");
 	}
 
 	return text;

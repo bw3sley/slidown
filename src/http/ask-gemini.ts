@@ -22,14 +22,14 @@ export async function askGemini(
 	);
 
 	if (!res.ok) {
-		throw new AiClientError(`Gemini request failed (${res.status}).`);
+		throw new AiClientError(`Gemini request failed (${res.status}).`, "provider_error");
 	}
 
 	const data = (await res.json()) as GeminiResponse;
 	const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
 	if (!text) {
-		throw new AiClientError("The Gemini response was empty or malformed.");
+		throw new AiClientError("The Gemini response was empty or malformed.", "empty_response");
 	}
 
 	return text;

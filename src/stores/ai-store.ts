@@ -4,6 +4,7 @@ import { immer } from "zustand/middleware/immer";
 import type { AiProviderId } from "@/constants/ai-providers";
 import { AiClientError } from "@/http/errors/ai-error";
 import { callModel } from "@/lib/ai-client";
+import { track } from "@/lib/analytics";
 import { SLIDE_CRITIQUE_SYSTEM_PROMPT } from "@/prompts/slide-critique";
 import {
 	EMPTY_DECK_REQUEST_PROMPT,
@@ -73,6 +74,7 @@ export const useAiStore = create<AiState>()(
 					set((state) => {
 						state.loading = false;
 					});
+					track({ event: "ai_generate_succeeded", properties: { provider } });
 				} catch (err) {
 					set((state) => {
 						state.loading = false;
@@ -80,6 +82,13 @@ export const useAiStore = create<AiState>()(
 							err instanceof AiClientError
 								? err.message
 								: "Something went wrong generating the deck.";
+					});
+					track({
+						event: "ai_generate_failed",
+						properties: {
+							provider,
+							error_type: err instanceof AiClientError ? err.type : "unknown",
+						},
 					});
 				}
 			},
