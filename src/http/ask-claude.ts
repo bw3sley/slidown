@@ -28,13 +28,13 @@ export async function askClaude(
 	});
 
 	if (!res.ok) {
-		throw new AiClientError(`Anthropic request failed (${res.status}).`);
+		throw new AiClientError(`Anthropic request failed (${res.status}).`, "provider_error");
 	}
 
 	const data = (await res.json()) as ClaudeResponse;
 
 	if (data.stop_reason === "refusal") {
-		throw new AiClientError("The model declined this request.");
+		throw new AiClientError("The model declined this request.", "model_refusal");
 	}
 
 	const text = (data.content ?? [])
@@ -43,7 +43,7 @@ export async function askClaude(
 		.join("");
 
 	if (!text) {
-		throw new AiClientError("The Claude response was empty or malformed.");
+		throw new AiClientError("The Claude response was empty or malformed.", "empty_response");
 	}
 
 	return text;

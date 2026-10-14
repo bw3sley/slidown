@@ -24,6 +24,7 @@ export async function callModel(
 
 		throw new AiClientError(
 			`Add ${article} ${AI_PROVIDERS[provider].keyPlaceholder} first.`,
+			"missing_key",
 		);
 	}
 
@@ -38,6 +39,6 @@ export async function callModel(
 			throw err;
 		}
 
-		throw new AiClientError("Network error while contacting the model.", err);
+		throw new AiClientError("Network error while contacting the model.", "network_error", err);
 	}
 }

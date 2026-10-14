@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import skillMarkdown from "@/skills/slidown-slides/SKILL.md?raw";
+import { track } from "@/lib/analytics";
 
 const SKILL_FILE_NAME = "SKILL.md";
 
@@ -21,6 +22,7 @@ export function useDownloadSkill() {
 			anchor.click();
 			anchor.remove();
 			URL.revokeObjectURL(url);
+			track({ event: "skill_downloaded" });
 
 			toast.success("Skill file downloaded", {
 				description: "slidown-slides/SKILL.md",
