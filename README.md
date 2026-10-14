@@ -1,40 +1,36 @@
 # Slidown
 
-![Cover](./src/assets/cover.png)
+![Slidown cover](./src/assets/cover.png)
 
-## Idea
+Slidown is a browser-based slide editor for people who would rather write than arrange text boxes. Write a deck in Markdown, see each slide as you go, and adjust the theme, accent, font, or layout when you need to.
 
-Slidown came from a common presentation pain point: every time I need to present something, I have to open PowerPoint or another slide tool and spend too much time formatting instead of thinking about content.
+I started it because making a presentation kept pulling me away from the actual story. The idea is simple: get the words down first, then make them look good without rebuilding every slide by hand. [Try Slidown](https://slidown.dev/).
 
-The goal is to let developers, and eventually broader users too, create presentations from Markdown or AI-generated content. Instead of building slides manually, users should be able to write, prompt, or transform content into a presentation-ready format much faster.
+## What you can do
 
-## Main experience
+- Write slides in Markdown with a live preview and a starter deck to learn the format.
+- Choose slide layouts, themes, accents, and fonts.
+- Ask Claude, Gemini, or OpenAI to draft a deck or critique one, using your own API key.
+- Export a deck as a PDF.
 
-- Create presentations without the usual PowerPoint busywork
-- Turn Markdown writing into slide decks quickly
-- Use AI to help draft or transform presentation content
-- Customize themes, accents, and typography without heavy design work
-- Make presentation creation faster for developers and other users
+Each URL path opens a separate board. Boards are saved in your browser's local storage, so opening the same path on another device will not bring the deck with it.
 
-## Boards
+## Tech stack
 
-Each URL path is a separate board. Open `/` or type a path such as `/1` or `/my-board` in the address bar to create or reopen one. New boards start empty, with an option to insert the starter deck. Boards save in this browser's localStorage as you edit; opening the same URL on another device does not transfer the board.
+| Area | Tools |
+| --- | --- |
+| App | React 19, TypeScript 6, Vite 8 |
+| Styling and UI | Tailwind CSS v4, Radix UI, Lucide React |
+| Editor and slides | Monaco Editor, react-markdown, unified |
+| State and forms | Zustand, React Hook Form, Zod |
 
-## Analytics configuration
+Slidown runs as a client-side app. The editor keeps boards in local storage, and AI requests go directly from the browser to the provider you choose.
+Optional PostHog analytics records fixed-choice actions and slide counts. It excludes slide content, AI prompts and responses, API keys, and board paths.
 
-Copy `.env.example` to `.env.local` and set `VITE_POSTHOG_KEY` to enable anonymous product events. Leave the key empty to disable PostHog, including in local development and CI. `VITE_POSTHOG_HOST` defaults to `https://us.i.posthog.com` and can point to another region or a self-hosted instance.
+## Feedback
 
-Vite embeds both values at build time. For Docker builds, pass `--build-arg VITE_POSTHOG_KEY=...` and, if needed, `--build-arg VITE_POSTHOG_HOST=...`. The project key is public browser configuration, not a provider API secret.
+Have an idea or found something that feels off? [Open an issue](https://github.com/bw3sley/slidown/issues). If you like the project, [leave it a star](https://github.com/bw3sley/slidown).
 
-Only fixed-choice product events and slide counts are tracked. Slide content, AI prompts and responses, provider API keys, and board paths are excluded. PostHog respects Do Not Track; automatic page tracking and session recording are disabled.
+## License
 
-## Tech
-
-- HTML
-- JavaScript
-- Markdown parsing
-- Design prototype runtime
-
-## Notes
-
-This repository is currently a front-end prototype.
+Slidown is available under the [MIT License](./LICENSE.md).
