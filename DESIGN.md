@@ -149,6 +149,7 @@ When the deck is blank, or the active slide has no body and no image, the previe
 
 ## Responsive Behavior
 - **Mobile (< 768px):** stack sections vertically, preserve readable spacing, avoid cramped multi-column layouts.
+- **Mobile header (< 768px):** show only the brand, Share and a settings cog. The cog opens a popover with appearance, slide theme and slide font; the full pickers return from `md` up.
 - **Tablet (768px-1024px):** allow 2-column content grids where cards still breathe.
 - **Desktop (> 1024px):** use wider containers, stronger section rhythm, and multi-column catalogs when useful.
 

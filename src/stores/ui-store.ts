@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type PanelKey = "theme" | "font" | "share" | "layout" | "ai" | null;
+export type PanelKey = "theme" | "font" | "share" | "layout" | "ai" | "settings" | null;
 
 interface UiState {
 	openPanel: PanelKey;
