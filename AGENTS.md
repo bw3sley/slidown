@@ -25,6 +25,7 @@ npm run og            # regenerate public/og-image.png and apple-touch-icon.png
 - **Dates** - dayjs, configured in `src/lib/dayjs.ts`
 - **Icons** - Lucide React
 - **Notifications** - Sonner
+- **Analytics** - PostHog browser SDK (`posthog-js`), initialized only when a build-time key is set
 - **Linting** - oxlint
 - **Language** - TypeScript 6
 - **Deploy** - Docker: Node build stage, nginx serves `dist/` with SPA fallback
@@ -46,6 +47,7 @@ src/
   hooks/              # shared hooks
   http/               # AI provider clients (Claude, Gemini, OpenAI) and errors
   lib/                # utilities like `cn()`, `dayjs`, slide parser/layout, AI client
+    analytics.ts       # only PostHog import, event types and privacy filter
   prompts/            # AI prompt templates
   skills/             # bundled skill files
   stores/             # Zustand stores
@@ -58,6 +60,13 @@ CLAUDE.md             # points agents back to this file
 ## Path Aliases
 
 `@/*` maps to `./src/*` (set in `tsconfig.app.json` and `vite.config.ts`).
+
+## Analytics
+
+- `VITE_POSTHOG_KEY` and `VITE_POSTHOG_HOST` are build-time variables. The key defaults to empty; the host defaults to PostHog US Cloud. Pass both as Docker build arguments when building an analytics-enabled image.
+- Track only explicit actions through `src/lib/analytics.ts`. Keep event properties limited to fixed choices, booleans and counts.
+- Never send Markdown, slide titles or excerpts, AI prompts or responses, provider API keys, board IDs, or other free text to PostHog. Board IDs come from the URL path, so keep the send-time URL filter in place.
+- Keep autocapture, page tracking, session recording, and person profiles disabled.
 
 ## Design Reference
 

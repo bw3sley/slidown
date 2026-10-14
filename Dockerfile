@@ -7,6 +7,10 @@ COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/root/.npm npm ci
 
 COPY . .
+ARG VITE_POSTHOG_KEY=
+ARG VITE_POSTHOG_HOST=https://us.i.posthog.com
+ENV VITE_POSTHOG_KEY=$VITE_POSTHOG_KEY
+ENV VITE_POSTHOG_HOST=$VITE_POSTHOG_HOST
 RUN npm run build
 
 FROM nginx:alpine AS runtime

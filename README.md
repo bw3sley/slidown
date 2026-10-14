@@ -25,6 +25,7 @@ Each URL path opens a separate board. Boards are saved in your browser's local s
 | State and forms | Zustand, React Hook Form, Zod |
 
 Slidown runs as a client-side app. The editor keeps boards in local storage, and AI requests go directly from the browser to the provider you choose.
+Optional PostHog analytics records fixed-choice actions and slide counts. It excludes slide content, AI prompts and responses, API keys, and board paths.
 
 ## Feedback
 

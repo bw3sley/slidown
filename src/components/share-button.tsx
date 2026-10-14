@@ -9,6 +9,9 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useDownloadSkill } from "@/hooks/use-download-skill";
+import { track } from "@/lib/analytics";
+import { parseDeck } from "@/lib/slide-parser";
+import { useDeckStore } from "@/stores/deck-store";
 import { useUiStore } from "@/stores/ui-store";
 
 export function ShareButton() {
@@ -22,12 +25,16 @@ export function ShareButton() {
 
 	function handleExportPdf() {
 		useUiStore.getState().setPrinting(true);
+		track({
+			event: "export_pdf",
+			properties: { slide_count: parseDeck(useDeckStore.getState().markdown).length },
+		});
 	}
 
 	return (
 		<DropdownMenu open={open} onOpenChange={handleOpenChange}>
 			<DropdownMenuTrigger asChild>
-				<Button size="md" className="ml-3">
+				<Button size="md" className="md:ml-3">
 					<Share2 className="size-3.5" />
 					Share
 				</Button>
