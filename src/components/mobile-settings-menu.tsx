@@ -22,6 +22,9 @@ import { useUiStore } from "@/stores/ui-store";
 const SECTION_LABEL =
 	"mb-1.5 text-xxs font-bold tracking-[0.06em] text-muted-foreground uppercase";
 
+const APPEARANCE_ITEM =
+	"flex-1 rounded-md data-[state=on]:bg-popover data-[state=on]:text-foreground data-[state=on]:shadow-xs";
+
 export function MobileSettingsMenu() {
 	const { theme, setTheme } = useTheme();
 	const deckThemeId = useDeckStore((s) => s.deckThemeId);
@@ -64,27 +67,27 @@ export function MobileSettingsMenu() {
 				<div className={SECTION_LABEL}>Appearance</div>
 				<ToggleGroup
 					type="single"
-					variant="default"
+					variant="ghost"
 					size="sm"
 					value={theme ?? "system"}
 					onValueChange={handleAppearanceChange}
-					className="w-full"
+					className="w-full rounded-lg bg-background p-0.5"
 				>
-					<ToggleGroupItem value="light" className="flex-1">
+					<ToggleGroupItem value="light" className={APPEARANCE_ITEM}>
 						<Sun className="size-3.5" />
 						Light
 					</ToggleGroupItem>
-					<ToggleGroupItem value="dark" className="flex-1">
+					<ToggleGroupItem value="dark" className={APPEARANCE_ITEM}>
 						<Moon className="size-3.5" />
 						Dark
 					</ToggleGroupItem>
-					<ToggleGroupItem value="system" className="flex-1">
+					<ToggleGroupItem value="system" className={APPEARANCE_ITEM}>
 						<Monitor className="size-3.5" />
 						Auto
 					</ToggleGroupItem>
 				</ToggleGroup>
 
-				<Separator className="my-3" />
+				<Separator className="-mx-3 my-3 data-[orientation=horizontal]:w-[calc(100%+1.5rem)]" />
 
 				<div className={SECTION_LABEL}>Slide theme</div>
 				<div className="grid grid-cols-4 gap-2">
@@ -109,7 +112,7 @@ export function MobileSettingsMenu() {
 					})}
 				</div>
 
-				<Separator className="my-3" />
+				<Separator className="-mx-3 my-3 data-[orientation=horizontal]:w-[calc(100%+1.5rem)]" />
 
 				<div className={SECTION_LABEL}>Slide font</div>
 				<div className="flex flex-col gap-0.5">
