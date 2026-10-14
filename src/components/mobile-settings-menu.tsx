@@ -1,6 +1,5 @@
 import { Monitor, Moon, Settings, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { FontPickerItem } from "@/components/font-picker-item";
 import { ThemeItem } from "@/components/theme-item";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,12 +7,20 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
 	DECK_FONT_CLASS,
 	DECK_FONT_ORDER,
 	DECK_FONTS,
+	type DeckFontId,
 } from "@/constants/deck-fonts";
 import { DECK_THEME_ORDER, DECK_THEMES } from "@/constants/deck-themes";
 import { useDeckStore } from "@/stores/deck-store";
@@ -115,18 +122,25 @@ export function MobileSettingsMenu() {
 				<Separator className="-mx-3 my-3 data-[orientation=horizontal]:w-[calc(100%+1.5rem)]" />
 
 				<div className={SECTION_LABEL}>Slide font</div>
-				<div className="flex flex-col gap-0.5">
-					{DECK_FONT_ORDER.map((fontKey) => (
-						<FontPickerItem
-							key={fontKey}
-							fontKey={fontKey}
-							label={DECK_FONTS[fontKey].label}
-							fontClassName={DECK_FONT_CLASS[fontKey]}
-							isActive={fontKey === deckFontId}
-							onSelect={setDeckFont}
-						/>
-					))}
-				</div>
+				<Select
+					value={deckFontId}
+					onValueChange={(value) => setDeckFont(value as DeckFontId)}
+				>
+					<SelectTrigger aria-label="Slide font" data-testid="mobile-font-select">
+						<SelectValue />
+					</SelectTrigger>
+					<SelectContent>
+						{DECK_FONT_ORDER.map((fontKey) => (
+							<SelectItem
+								key={fontKey}
+								value={fontKey}
+								className={DECK_FONT_CLASS[fontKey]}
+							>
+								{DECK_FONTS[fontKey].label}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
 			</PopoverContent>
 		</Popover>
 	);
